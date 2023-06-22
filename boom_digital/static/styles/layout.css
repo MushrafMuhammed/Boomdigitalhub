@@ -1,0 +1,13 @@
+.navPadding{
+    padding-top: 12rem;
+    padding-bottom: 12rem;
+}
+
+.category-emt:hover{
+    background-color: whitesmoke;
+    color: black;
+}
+
+#category-hover{
+    visibility: visible;
+}

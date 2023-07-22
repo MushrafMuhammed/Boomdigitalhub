@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .angry-grid {
+            display: grid;
+
+            grid-template-rows: 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+            gap: 0px;
+            height: 100%;
+
+        }
+
+        #item-0 {
+
+            background-color: #7B9579;
+            grid-row-start: 1;
+            grid-column-start: 1;
+
+            grid-row-end: 3;
+            grid-column-end: 3;
+
+        }
+    </style>
+</head>
+
+<body>
+    <section id="category-hover">
+        <div class="bg-success text-dark bg-opacity-10" style="height: 450px;">
+            <div class="angry-grid">
+                <div id="item-0" style="border: 2px black;">&nbsp;</div>
+            </div>
+            
+        </div>
+    </section>
+</body>
+
+</html>

@@ -6,8 +6,8 @@ def homefun(request):
     
     return render(request, 'common/home.html')
 
-def null_search_redirect(request):
-    return redirect('home')
+# def null_search_redirect(request):
+#     return redirect(homefun)
 
 def loginfun(request):
     msg = ""
@@ -20,5 +20,8 @@ def loginfun(request):
     #         return redirect("common:home")
     #     except:
     #         msg = "invalid password or username"
-
     return render(request, "common/login.html", {"error_message": msg})
+
+def offers_hoverfun(request):
+    
+    return render(request, 'common/offers_hover.html')

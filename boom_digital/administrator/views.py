@@ -22,6 +22,18 @@ def loginfun(request) :
 
 def dashboardfun(request):
     return render(request, 'administrator/dashboard.html')
+   
+def newCategoryfun(request):
+    return render(request, 'administrator/categoryReg.html')
+
+def categoryfun(request):
+    return render(request, 'administrator/categories.html')
+
+def newBrandfun(request):
+    return render(request, 'administrator/brandReg.html')
+
+def brandfun(request):
+    return render(request, 'administrator/brands.html')
 
 def staff_fun(request):
     return render(request, 'administrator/staff.html')

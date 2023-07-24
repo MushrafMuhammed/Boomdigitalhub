@@ -1,0 +1,128 @@
+{% extends 'customer/layout.html' %}
+
+{% block style %}
+<style>
+    .emt:hover {
+        border-bottom: 4px solid #e12454;
+        font-weight: bold;
+    }
+
+    .custom-card {
+    border: none; /* Remove the border */
+    box-sizing: border-box;
+    background-color: #f7f7f7;
+    border-radius: 1.38888889vw;
+}
+</style>
+{% endblock %}
+{%block carousel%}
+<section id="">
+    <div id="carouselExample" class="carousel slide">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img style="height: 410px;" src="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/og-macbook-pro-202301?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1670261864358"
+                    class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img style="height: 410px;"
+                    src="https://in-files.apjonlinecdn.com/landingpages/content-pages/hp-intel-evo-p2/images/w100_video_thumbnail.jpg"
+                    class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img style=" height: 410px;"
+                    src="https://i.dell.com/is/image/DellContent//content/dam/ss2/product-images/page/search-creative-images/banners/2800x839/large-screen-laptop-dell-scp-2800.png?fmt=png-alpha&wid=2800&hei=839"
+                    class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+{%endblock%}
+
+{% block content %}
+<section class="" id="product-section">
+    <div class="container">
+        <h1 class="text-center font-weight-bolder pt-5"><b>Latest deals on Laptops</b></h1>
+
+        <div class="row mt-3">
+            <nav class="navbar navbar-expand-lg navbar-dark pb-1">
+                <div class="container">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mx-auto mb-2 mb-lg-0">
+
+                            <div class="category-emt me-2">
+                                <li class="nav-item me-5">
+                                    <a class="nav-link emt active text-dark" aria-current="page" href="">
+                                        Apple
+                                    </a>
+                                </li>
+                            </div>
+
+                            <div class="category-emt me-2">
+                                <li class="nav-item me-5">
+                                    <a class="nav-link emt active text-dark" aria-current="page" href="">
+                                        Hp
+                                    </a>
+                                </li>
+                            </div>
+
+                            <div class="category-emt me-2">
+                                <li class="nav-item me-5">
+                                    <a class="nav-link emt active text-dark" aria-current="page" href="">
+                                        Dell
+                                    </a>
+                                </li>
+                            </div>
+
+                            <div class="category-emt me-2">
+                                <li class="nav-item me-5">
+                                    <a class="nav-link emt active text-dark" aria-current="page" href="">
+                                        Accer
+                                    </a>
+                                </li>
+                            </div>
+
+                            <div class="category-emt me-2">
+                                <li class="nav-item me-5">
+                                    <a class="nav-link emt active text-dark" aria-current="page" href=""> Others </a>
+                                </li>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+
+        <div class="row mt-3">
+            <div class="col-md-3">
+                <div class="card custom-card text-dark bg-opacity-10 mb-5" >
+                    <div class="d-flex justify-content-center align-items-center">
+                        <img class="card-img-top rounded-circle p-3 " src="" class="card-img-top" alt=""
+                            style="height: 330px; width: 330px;">
+                    </div>
+
+                    <div class="card-body text-dark">
+                        <h5 class="card-title"><b>Hp G7 250</h5>
+                        <p class="">$ 300</p>
+                        <p class="card-text text-dark"><b>Best Price: $ 280</b></p>
+                        <a href="" class="btn btn-dark items-center" style="width: 100%;">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+
+
+
+{% endblock %}

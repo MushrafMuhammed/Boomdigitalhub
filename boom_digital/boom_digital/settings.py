@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     #Local
     'common',
     'administrator',
+    'staff',
+    'customer',
 ]
 
 MIDDLEWARE = [

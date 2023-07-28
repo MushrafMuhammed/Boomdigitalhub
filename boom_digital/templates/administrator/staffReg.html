@@ -29,19 +29,36 @@
         <div class="card-body p-md-5 text-black">
             <h3 class="mb-5 text-uppercase"><b>Employee Registration</b></h3>
 
-            <form>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="row">
 
                     <div class="form-group mb-4">
-                        <label class="form-label" for="form3Example1m">Full name</label>
-                        <input type="text" id="form3Example1m" class="form-control form-control-lg" name="name" />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-4">
+                                    <label class="form-label" for="form3Example1m">First name</label>
+                                    <input type="text" id="form3Example1m" class="form-control form-control-lg" name="first_name" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-4">
+                                    <label class="form-label" for="form3Example1m">Last name</label>
+                                    <input type="text" id="form3Example1m" class="form-control form-control-lg" name="last_name" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group mb-4">
-                        <label class="form-label" for="form3Example9">Address</label>
-                        <textarea class="form-control" name="address" rows="5"></textarea>
+                        <label class="form-label" for="form3Example9">Email</label>
+                        <input type="email" class="form-control form-control-lg" name="email">
                     </div>
 
+                    <div class="form-group mb-4">
+                        <label class="form-label" for="form3Example9">Mobile</label>
+                        <input type="text" class="form-control form-control-lg" minlength="0" name="number" />
+                    </div>
 
                     <div class="form-group mb-4">
                         <div class="row">
@@ -76,13 +93,14 @@
                     </div>
 
                     <div class="form-group mb-4">
-                        <label class="form-label" for="form3Example9">Email</label>
-                        <input type="email" class="form-control form-control-lg" name="email">
+                        <label class="form-label" for="form3Example9">Position</label>
+                        <input type="text" class="form-control form-control-lg" name="position" />
                     </div>
 
                     <div class="form-group mb-4">
-                        <label class="form-label" for="form3Example9">Mobile</label>
-                        <input type="text" class="form-control form-control-lg" minlength="0" name="phone" />
+                        <label class="form-label" for="form3Example9">joining date </label>
+                        <input type="date" class="form-control"
+                        placeholder="dd/mm/yyyy" name="hired_date" />
                     </div>
 
                     <div class="form-group mb-4">
@@ -90,22 +108,9 @@
                         <input type="text" class="form-control form-control-lg" name="qualification" />
                     </div>
 
-                    <div class="form-group mb-4">
-                        <label class="form-label" for="form3Example9">Password</label>
-                        <input type="text" class="form-control form-control-lg" name="password" />
-                    </div>
 
                     <div class="form-group mb-4">
-                        <label class="form-label" for="form3Example9">Department</label>
-                        <select class="form-group form-select" aria-label="Default select example" name="department">
-                            <option selected>Select department</option>
-                            <option *ngFor="let department of departments" value=></option>
-                        </select>
-                    </div>
-
-
-                    <div class="form-group mb-4">
-                        <label class="form-label" for="form3Example8">Profile photo</label>
+                        <label class="form-label" for="form3Example8">Profile</label>
                         <input type="file" class="form-control" name="profile_img" />
                     </div>
                 </div>
@@ -120,5 +125,12 @@
         </div>
     </div>
 </div>
+
+<script>
+    {% if successMessage %}
+    // Display an alert box with the success message
+    alert("{{ successMessage }}");
+    {% endif %}
+</script>
 
 {% endblock %}

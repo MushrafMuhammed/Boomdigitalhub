@@ -1,0 +1,119 @@
+{% extends 'administrator/layout.html' %}
+
+{% block style %}
+<style>
+    .btn-main-2 {
+        background: #e12454;
+        color: #fff;
+        border-color: #e12454;
+        text-decoration: none;
+        width: 40%;
+
+
+    }
+
+    .btn-main-2:hover {
+        background: #223a66;
+        color: #fff;
+        border-color: #223a66;
+    }
+</style>
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+
+        <div class="card-body p-md-5 text-black">
+            <h3 class="mb-5 text-uppercase"><b>Update Brand Details</b></h3>
+
+            
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+
+                    <div class="form-group mb-4">
+                        <label class="form-label" for="form3Example1m">Brand name</label>
+                        <input type="text" id="form3Example1m" class="form-control form-control-lg" name="name" value="{{item.name}}"/>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="inputPassword3" class="col-form-label">Description</label>
+                        <div>
+                            <textarea class="form-control" id="descriptionField" placeholder="Write Description" rows="3"
+                                style="margin-bottom: 20px;" name="description"> {{ item.description }} </textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="inputEmail3" class="col-form-label">Category</label>
+                        <div>
+                            <select class="form-select" name="category">
+                                <option value="{{item.category}}" selected>{{item.category.name}}</option>
+                                {%for category in categories%}
+                                <option value="{{category.id}}">{{category.name}}</option>
+                                {%endfor%}
+
+                                
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label class="form-label" for="form3Example8">Current Logo</label>
+                        <img id="logoPreview" class="form-control" src="{{ item.logo.url }}" alt="Logo Preview" style="max-width: 200px; max-height: 200px;" />
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label class="form-label" for="form3Example8">Change Logo</label>
+                        <input type="file" class="form-control" name="logo"/>
+                    </div>
+                </div>
+
+
+
+                <div class="d-flex justify-content-center pt-3">
+                    <button type="submit" id="add-btn" class="btn-main-2 btn-round p-2 btn-lg ms-2" data-request-id="{{item.id}}">Update</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+
+        $.ajaxSetup({
+            headers: {
+                "X-CSRFToken": $('[name=csrfmiddlewaretoken]').val()
+            }
+        });
+
+        $('#add-btn').click(function () {
+            var button = $(this);
+            var requestId = $(this).data('request-id');
+            $.ajax({
+                url: "{% url 'admin:editBrand' %}",
+                method: 'POST',
+                data: { 'request_id': requestId },
+
+                success: function (response) {
+                  alert('Done') 
+                },
+                error: function (xhr, status, error) {
+                    alert('Not Done')
+                }
+            });
+        });
+    });
+
+</script>
+
+
+
+{% endblock %}

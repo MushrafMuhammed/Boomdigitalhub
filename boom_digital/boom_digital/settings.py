@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles',   
     
     #Local
     'common',
@@ -88,8 +88,12 @@ WSGI_APPLICATION = 'boom_digital.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'boom_digital',
+        'USER': 'postgres',
+        'PASSWORD': 'mhd@PostgreSQL',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 

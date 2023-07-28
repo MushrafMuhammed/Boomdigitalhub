@@ -32,44 +32,58 @@
                     <div>
                         <h5><b>Employees List</b></h5>
                     </div>
-                    <div class="mr-auto">Total Number of employees - </div>
+                    <div class="mr-auto">Total Number of employees - {{employee_count}}</div>
                     <a href="{% url 'admin:staff-reg' %}" class="btn-main-2 btn-round p-2">New employee  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
                       </svg></a>
                 </div>
             </div>
             
-
             <div class="row">
                 <table class="table">
                     <thead class="bg-dark">
                         <tr class="th_row text-light">
                             <th class="font-13 border-0 min-150">Name</th>
-                            <th class="font-13 border-0 min-150">Department</th>
-                            <th class="font-13 border-0 min-150">Qualification</th>
+                            <th class="font-13 border-0 min-150">Email</th>
+                            <th class="font-13 border-0 min-150">phone</th>
                             <th class="font-13 border-0 min-150">
-                                Number
+                                gender
                             </th>
-                            <th class="font-13 border-0 min-100">Email</th>
+                            <th class="font-13 border-0 min-100">position</th>
+                            <th class="font-13 border-0 min-150">hired_date</th>
+                            <th class="font-13 border-0 min-150">qualification</th>
                             <th class="font-13 border-0 min-150"></th>
                             <th class="font-13 border-0 min-150"></th>
+
                         </tr>
                     </thead>
                     <tbody class="tr_hover">
                         <!-- employeesList -->
+            {% for employee in employees %}
+
                         <tr>
                             <td class="font-13 text-black-50 pointer">
+                                {{employee.second_name}}
                             </td>
                             <td class="font-13 text-black-50 pointer">
-                                <a style="  color: inherit;" href="">
-                                </a>
+                                {{employee.email}}
                             </td>
                             <td class="font-13 text-black-50 pointer">
+                                {{employee.phone}}
                             </td>
                             <td class="font-13 text-black-50 pointer">
+                                {{employee.gender}}
                             </td>
                             <td class="font-13 text-black-50 pointer">
+                                {{employee.position}}
                             </td>
+                            <td class="font-13 text-black-50 pointer">
+                                {{employee.hired_date}}
+                            </td>
+                            <td class="font-13 text-black-50 pointer">
+                                {{employee.qualification}}
+                            </td>
+
                             <td>
                                 <a href="">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
@@ -91,7 +105,8 @@
                             </td>
 
                         </tr>
-                        <!-- /ko -->
+                        {% endfor %}
+                        
                     </tbody>
                 </table>
             </div>

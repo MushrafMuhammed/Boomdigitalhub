@@ -26,7 +26,7 @@ class Brand(models.Model):
 
     class Meta :
         db_table = 'brand'
-
+                                                                                                                                                                                                                                                                                                                                 
 class Employee(models.Model):
     first_name = models.CharField(max_length=50,default='')
     second_name = models.CharField(max_length=50,default='')

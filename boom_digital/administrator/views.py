@@ -134,7 +134,7 @@ def editBrandfun(request):
     else:
         return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
-def staffRegfun(request):
+def newEmployeefun(request):
     msg = ""
     if request.method == 'POST':
         first_name = request.POST['first_name']
@@ -159,14 +159,27 @@ def staffRegfun(request):
             profile_img = employee_profile,
         )
         newEmoloyee.save()
-        msg = "Done" 
-    return render(request, 'administrator/staffReg.html',{'successMessage':msg})
+        msg = "Registration completed" 
+    return render(request, 'administrator/newEmployee.html',{'successMessage':msg})
 
 
-def staff_fun(request):
+def employee_fun(request):
     employees = Employee.objects.all()
     count = employees.count()
-    return render(request, 'administrator/staff.html',{'employees':employees, 'employee_count':count})
+    return render(request, 'administrator/employeeList.html',{'employees':employees, 'employee_count':count})
+
+def delEmployeefun(request,employee_id):
+    delEmployee = Employee.objects.get(
+        id = employee_id,
+    )
+    delEmployee.delete()
+    return redirect('admin:employeeList')
+
+def employeeDetailsfun(request,employee_id):
+    editemployee = Employee.objects.get(
+        id = employee_id,
+    )
+    return render(request, 'administrator/employeeDetails.html',{'editemployee':editemployee})
 
 def customerfun(request):
     return render(request, 'administrator/customerList.html')

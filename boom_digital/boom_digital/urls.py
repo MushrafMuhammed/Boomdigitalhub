@@ -23,7 +23,7 @@ urlpatterns = [
     path('', homefun , name='common_home'),
     path('admin/', include('administrator.urls')),
     path('common/', include('common.urls')),
-    path('staff/', include('staff.urls')),
+    path('employee/', include('staff.urls')),
     path('customer/', include('customer.urls')),
 
 

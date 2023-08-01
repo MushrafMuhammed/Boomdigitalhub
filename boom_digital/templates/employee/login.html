@@ -29,13 +29,13 @@
                                 <div class="col-md-6 col-lg-7 d-flex align-items-center">
                                     <div class="card-body p-4 p-lg-5 text-black">
 
-                                        {{ errorMessage }}
+                                        
                                         <form method="POST">
                                             {% csrf_token %}
 
                                             <div class="d-flex align-items-center mb-3 pb-1">
                                                 <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
-                                                <span class="h1 fw-bold mb-0">Staff Login</span>
+                                                <span class="h1 fw-bold mb-0">Employee Login</span>
                                             </div>
 
                                             <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your
@@ -43,7 +43,7 @@
 
                                             <div class="mb-4">
                                                 <label class="form-label">Username</label>
-                                                <input type="email" name="email" id="email"
+                                                <input type="email" name="username" id="username"
                                                     class="form-control form-control-lg" />
                                             </div>
 
@@ -76,6 +76,13 @@
             </div>
         </section>
     </div>
+
+    <script>
+       {% if errorMessage %}
+       // Display an alert box with the errorMessage
+       alert("{{ errorMessage }}")
+       {% endif %}
+    </script>
 </body>
 
 </html>

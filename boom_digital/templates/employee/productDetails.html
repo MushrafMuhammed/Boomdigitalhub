@@ -1,4 +1,4 @@
-{% extends 'staff/layout.html' %}
+{% extends 'employee/layout.html' %}
 
 {% block style %}
 <style>
@@ -27,7 +27,7 @@
     <div class="row">
 
         <div class="card-body p-md-5 text-black">
-            <h3 class="mb-5 text-uppercase"><b>New Product</b></h3>
+            <h3 class="mb-5 text-uppercase"><b>Product Details</b></h3>
 
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -36,8 +36,10 @@
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Category</label>
                     <div class="col-sm-10">
                         <select class="form-select" name="category">
-                            <option>Select category</option>
-                            <option value="">*****</option>
+                            <option value="{{editemployee.category}}" selected>{{editemployee.category.name}}</option>
+                            {% for category in categories %}
+                            <option value="{{category.id}}">{{category.name}}</option>
+                            {%endfor%}
                         </select>
                     </div>
                 </div><br>
@@ -45,9 +47,11 @@
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Brand</label>
                     <div class="col-sm-10">
-                        <select class="form-select" name="category">
-                            <option>Select brand</option>
-                            <option value="">*****</option>
+                        <select class="form-select" name="brand">
+                            <option value="{{editemployee.brand}}">{{editemployee.brand.name}}</option>
+                            {% for brand in brands %}
+                            <option value="{{brand.id}}">{{brand.name}}</option>
+                            {%endfor%}
                         </select>
                     </div>
                 </div><br>
@@ -55,7 +59,7 @@
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Product</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="nameField" placeholder="Product name" name="name"><br>
+                        <input type="text" class="form-control" id="nameField" placeholder="Product name" name="name" value="{{editemployee.name}}"><br>
                     </div>
                 </div>
 
@@ -63,31 +67,40 @@
                     <label for="inputPassword3" class="col-sm-2 col-form-label">Description</label>
                     <div class="col-sm-10">
                         <textarea class="form-control" id="descriptionField" placeholder="Write Description" rows="3"
-                            style="margin-bottom: 20px;" name="description"></textarea>
+                            style="margin-bottom: 20px;" name="description">{{editemployee.description}}</textarea>
                     </div>
                 </div>
                 <div class=" form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Price</label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" id="pricefield" placeholder="$" name="price"><br>
+                        <input type="number" class="form-control" id="pricefield" placeholder="₹" name="price" value="{{editemployee.price}}"><br>
+                    </div>
+                </div>
+                <div class=" form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Offer Price</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" id="offer_price" placeholder="₹" name="offer_price" value="{{editemployee.offer_price}}"><br>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Current Stock</label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" id="" placeholder="stock" name="current_stock"><br>
+                        <input type="number" class="form-control" id="" placeholder="stock" name="current_stock" value="{{editemployee.current_stock}}"><br>
                     </div>
                 </div>
+                <div class="form-group mb-4">
+                    <label class="form-label" for="form3Example8">Current Logo</label>
+                    <img id="logoPreview" class="form-control" src="{{editemployee.image.url}}" alt="Logo Preview" style="max-width: 200px; max-height: 200px;" />
+                </div>
                 <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Upload image</label>
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Change image</label>
                     <div class="col-sm-10">
                         <input type="file" name="image" class="form-control" id="stockField" placeholder="jpg"><br>
                     </div>
                 </div>
                 <div class="">
                     <div class="col-sm-10" style="width: 100%">
-                        <button type="submit" class="btn btn-dark" style="width: 50%; margin-left: 40%; ">Add
-                            Product</button>
+                        <button type="submit" class="btn btn-dark" style="width: 50%; margin-left: 40%; ">Update</button>
                     </div>
                 </div>
             </form>
@@ -95,5 +108,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    {% if successMessage %}
+    alert('{{successMessage}}')
+    {% endif %}
+</script>
 
 {% endblock %}

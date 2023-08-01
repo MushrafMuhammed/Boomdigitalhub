@@ -107,4 +107,8 @@ def orderfun(request):
 
 
 def stockDetailsfun(request):
-    return render(request, "employee/stockDetails.html")
+    productList = Product.objects.all()
+    productCount = productList.count()
+    # Calculate total current_stock
+    total_current_stock = sum(product.current_stock for product in productList)
+    return render(request, "employee/stockDetails.html",{'products':productList,'count':productCount, 'total_stock':total_current_stock})

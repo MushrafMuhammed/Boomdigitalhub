@@ -1,10 +1,15 @@
 from django.shortcuts import redirect, render
 
+from staff.models import Product
+
 # Create your views here.
 
 def homefun(request):
-    
-    return render(request, 'customer/home.html')
+    productList = Product.objects.all()
+    laptop_list = Product.objects.filter(category__name='Laptop')
+    laptop_list = Product.objects.filter(category__name='Laptop')
+    desktop_list = Product.objects.filter(category__name='Desktop')
+    return render(request, 'customer/home.html',{'products':productList,'laptops':laptop_list,'desktops':desktop_list})
 
 def offers_hoverfun(request):
     
@@ -15,8 +20,8 @@ def offersfun(request):
     return render(request, 'customer/offers.html')
 
 def mobilesfun(request):
-    
-    return render(request, 'customer/mobiles.html')
+    productList = Product.objects.all()
+    return render(request, 'customer/mobiles.html',{'products':productList})
 
 def laptopfun(request):
     

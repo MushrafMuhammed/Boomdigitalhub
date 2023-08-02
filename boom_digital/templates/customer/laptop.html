@@ -8,11 +8,19 @@
     }
 
     .custom-card {
-    border: none; /* Remove the border */
-    box-sizing: border-box;
-    background-color: #f7f7f7;
-    border-radius: 1.38888889vw;
-}
+        border: none;
+        /* Remove the border */
+        box-sizing: border-box;
+        background-color: #f7f7f7;
+        border-radius: 1.38888889vw;
+    }
+
+    .custom-card:hover {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        /* Example box shadow for the hover effect */
+        transform: scale(1.05);
+        /* Example scaling effect on hover */
+    }
 </style>
 {% endblock %}
 {%block carousel%}
@@ -20,7 +28,8 @@
     <div id="carouselExample" class="carousel slide">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img style="height: 410px;" src="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/og-macbook-pro-202301?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1670261864358"
+                <img style="height: 410px;"
+                    src="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/og-macbook-pro-202301?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1670261864358"
                     class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
@@ -101,22 +110,24 @@
         </div>
 
 
-        <div class="row mt-3">
-            <div class="col-md-3">
-                <div class="card custom-card text-dark bg-opacity-10 mb-5" >
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5">
+            {% for product in products %}
+            <div class="col mb-4">
+                <div class="card custom-card text-dark bg-opacity-10 h-100">
                     <div class="d-flex justify-content-center align-items-center">
-                        <img class="card-img-top rounded-circle p-3 " src="" class="card-img-top" alt=""
-                            style="height: 330px; width: 330px;">
+                        <img class="card-img-top rounded-circle p-3" src="{{ product.image.url }}" class="card-img-top"
+                            alt="" style="height: 250px; width: 250px;">
                     </div>
 
-                    <div class="card-body text-dark">
-                        <h5 class="card-title"><b>Hp G7 250</h5>
-                        <p class="">$ 300</p>
-                        <p class="card-text text-dark"><b>Best Price: $ 280</b></p>
-                        <a href="" class="btn btn-dark items-center" style="width: 100%;">Buy Now</a>
+                    <div class="card-body">
+                        <h5 class="card-title"><b>{{ product.name }}</h5>
+                        <h5 class="card-text text-dark">Offer Price: ₹ {{ product.offer_price }}</h5>
+                        <p>Price: {{ product.price }}</p>
+                        <a href="" class="btn btn-dark items-center mt-2" style="width: 100%;">Buy Now</a>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
 
 

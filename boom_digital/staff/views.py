@@ -32,7 +32,12 @@ def logoutfun(request):
 
 
 def dashboardfun(request):
-    return render(request, "employee/dashboard.html")
+    productList = Product.objects.all()
+    productCount = productList.count()
+    
+    # Calculate total current_stock
+    total_current_stock = sum(product.current_stock for product in productList)
+    return render(request, "employee/dashboard.html",{'count':productCount, 'total_stock':total_current_stock})
 
 
 def profilefun(request):
@@ -109,6 +114,7 @@ def orderfun(request):
 def stockDetailsfun(request):
     productList = Product.objects.all()
     productCount = productList.count()
+
     # Calculate total current_stock
     total_current_stock = sum(product.current_stock for product in productList)
     return render(request, "employee/stockDetails.html",{'products':productList,'count':productCount, 'total_stock':total_current_stock})

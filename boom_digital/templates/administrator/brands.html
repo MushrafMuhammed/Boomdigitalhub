@@ -30,7 +30,7 @@
                     <div>
                         <h5><b>Brand List</b></h5>
                     </div>
-                    <div class="mr-auto">Total Number of Brand - {{brand_count}}</div>
+                    <div class="mr-auto">Total Number of Brand - <strong>{{brand_count}}</strong></div>
                     <a href="{% url 'admin:newBrand' %}" class="btn-main-2 btn-round p-2">New Brand  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
                       </svg></a>
@@ -42,7 +42,6 @@
                 <table class="table">
                     <thead class="bg-dark">
                         <tr class="th_row text-light">
-                            <th class="font-13 border-0 min-150">Sl.No</th>
                             <th class="font-13 border-0 min-150">Category</th>      
                             <th class="font-13 border-0 min-150">Brand</th> 
                             <th class="font-13 border-0 min-150">Description</th>                            
@@ -56,9 +55,6 @@
                         <!-- brandList -->
                         {% for brand in brands%}
                         <tr>
-                            <td class="font-13 text-black-50 pointer">
-                                {{forloop.counter}}
-                            </td>
                             <td class="font-13 text-black-50 pointer">
                                 {{brand.category.name}}
                             </td>

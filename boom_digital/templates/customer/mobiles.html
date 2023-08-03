@@ -67,48 +67,42 @@
                         <ul class="navbar-nav me-auto mx-auto mb-2 mb-lg-0">
 
                             <div class="category-emt me-2">
-                                <li class="nav-item me-5">
-                                    <a class="nav-link emt active text-dark" aria-current="page" href="">
+                                <li id="apple" class="nav-item me-5" >
+                                    <a class="nav-link emt active text-dark" aria-current="page">
                                         Apple
                                     </a>
                                 </li>
                             </div>
 
                             <div class="category-emt me-2">
-                                <li class="nav-item me-5">
-                                    <a class="nav-link emt active text-dark" aria-current="page" href="">
+                                <li id="samsung" class="nav-item me-5">
+                                    <a class="nav-link emt active text-dark" aria-current="page">
                                         Samsung
                                     </a>
                                 </li>
                             </div>
 
                             <div class="category-emt me-2">
-                                <li class="nav-item me-5">
-                                    <a class="nav-link emt active text-dark" aria-current="page" href="">
+                                <li id="oneplus" class="nav-item me-5">
+                                    <a class="nav-link emt active text-dark" aria-current="page">
                                         One Pluse
                                     </a>
                                 </li>
                             </div>
 
                             <div class="category-emt me-2">
-                                <li class="nav-item me-5">
-                                    <a class="nav-link emt active text-dark" aria-current="page" href="">
+                                <li id="redmi" class="nav-item me-5">
+                                    <a class="nav-link emt active text-dark" aria-current="page">
                                         Redmi
                                     </a>
                                 </li>
                             </div>
 
                             <div class="category-emt me-2">
-                                <li class="nav-item me-5">
-                                    <a class="nav-link emt active text-dark" aria-current="page" href="">
+                                <li id="realme" class="nav-item me-5">
+                                    <a class="nav-link emt active text-dark" aria-current="page">
                                         Realme
                                     </a>
-                                </li>
-                            </div>
-
-                            <div class="category-emt me-2">
-                                <li class="nav-item me-5">
-                                    <a class="nav-link emt active text-dark" aria-current="page" href=""> Others </a>
                                 </li>
                             </div>
                         </ul>
@@ -117,30 +111,31 @@
             </nav>
         </div>
 
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5">
+                {% for mobile in mobiles %}
+                <div class="col mb-4">
+                    <div class="card custom-card text-dark bg-opacity-10 h-100">
+                        <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
+                            <img class="card-img-top rounded-circle p-3" src="{{ mobile.image.url }}"
+                                class="card-img-top" alt="" style="height: 100%; width: 100%; object-fit: contain;">
+                        </div>
 
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5">
-            {% for product in products %}
-            <div class="col mb-4">
-                <div class="card custom-card text-dark bg-opacity-10 h-100">
-                    <div class="d-flex justify-content-center align-items-center">
-                        <img class="card-img-top rounded-circle p-3" src="{{ product.image.url }}" class="card-img-top"
-                            alt="" style="height: 250px; width: 250px;">
-                    </div>
-
-                    <div class="card-body">
-                        <h5 class="card-title"><b>{{ product.name }}</h5>
-                        <h5 class="card-text text-dark">Offer Price: ₹ {{ product.offer_price }}</h5>
-                        <p>Price: {{ product.price }}</p>
-                        <a href="" class="btn btn-dark items-center mt-2" style="width: 100%;">Buy Now</a>
+                        <div class="card-body">
+                            <h5 class="card-title"><b>{{ mobile.name }}</b></h5>
+                            <h5 class="card-text text-dark">Offer Price: ₹ {{ mobile.offer_price }}</h5>
+                            <p>Price: {{ mobile.price }}</p>
+                            <a href="" class="btn btn-dark items-center mt-2" style="width: 100%;">Buy Now</a>
+                        </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
-
-
     </div>
 </section>
+
+
 
 
 

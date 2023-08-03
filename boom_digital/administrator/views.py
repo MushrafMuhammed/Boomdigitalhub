@@ -26,6 +26,7 @@ def loginfun(request) :
 def dashboardfun(request):
 
     return render(request, 'administrator/dashboard.html')
+
    
 def newCategoryfun(request):
     msg = ""
@@ -40,7 +41,7 @@ def newCategoryfun(request):
             logo = category_logo,
         )
         newCategory.save()
-        msg = "Done"
+        msg = "Category added successfully"
     return render(request, 'administrator/categoryReg.html',{'successMessage':msg})
 
 def categoryfun(request):
@@ -93,7 +94,7 @@ def newBrandfun(request):
             logo = brand_logo,
         )
         newBrand.save()
-        msg = "Done"
+        msg = "Brand added successfully"
     return render(request, 'administrator/brandReg.html',{'categories':categories, 'successMessage':msg})
 
 def brandfun(request):

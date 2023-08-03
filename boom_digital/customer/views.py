@@ -20,8 +20,11 @@ def offersfun(request):
     return render(request, 'customer/offers.html')
 
 def mobilesfun(request):
-    productList = Product.objects.all()
-    return render(request, 'customer/mobiles.html',{'products':productList})
+    mobileList = Product.objects.filter(
+        category__name = 'Mobiles'
+    )
+    
+    return render(request, 'customer/mobiles.html',{'mobiles':mobileList})
 
 def laptopfun(request):
     

@@ -32,7 +32,7 @@
                     <div>
                         <h5><b>Category List</b></h5>
                     </div>
-                    <div class="mr-auto">Total Number of Category - {{category_count}}</div>
+                    <div class="mr-auto">Total Number of Category - <strong>{{category_count}}</strong></div>
                     <a href="{% url 'admin:newCategory' %}" class="btn-main-2 btn-round p-2">New Category  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
                       </svg></a>
@@ -44,7 +44,6 @@
                 <table class="table">
                     <thead class="bg-dark">
                         <tr class="th_row text-light">
-                            <th class="font-13 border-0 min-150">Sl.No</th>
                             <th class="font-13 border-0 min-150">Category Name</th>  
                             <th class="font-13 border-0 min-150">Description</th>  
                             <th class="font-13 border-0 min-150"></th> 
@@ -55,9 +54,6 @@
                         <!-- categorysList -->
                         {% for category in categories %}
                         <tr>
-                            <td class="font-13 text-black-50 pointer">
-                                {{ forloop.counter }}
-                            </td>
                             <td class="font-13 text-black-50 pointer">
                                 {{ category.name }}
                             </td>

@@ -1,19 +1,21 @@
 {% extends 'customer/layout.html' %}
 {% block style %}
 <style>
-    .custom-card {
-    border: none; /* Remove the border */
+  .custom-card {
+    border: none;
+    /* Remove the border */
     box-sizing: border-box;
     background-color: #f7f7f7;
     border-radius: 1.38888889vw;
-    }
-    /* CSS for the hover effect */
-    .custom-card:hover {
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Example box shadow for the hover effect */
-      transform: scale(1.05); /* Example scaling effect on hover */
-    }
+  }
 
-
+  /* CSS for the hover effect */
+  .custom-card:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    /* Example box shadow for the hover effect */
+    transform: scale(1.05);
+    /* Example scaling effect on hover */
+  }
 </style>
 {% endblock %}
 
@@ -25,13 +27,13 @@
       {% for product in products %}
       <div class="col mb-4">
         <div class="card custom-card text-dark bg-opacity-10 h-100">
-          <div class="d-flex justify-content-center align-items-center">
+          <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
             <img class="card-img-top rounded-circle p-3" src="{{ product.image.url }}" class="card-img-top" alt=""
-              style="height: 250px; width: 250px;">
+              style="height: 100%; width: 100%; object-fit: contain;">
           </div>
 
           <div class="card-body">
-            <h5 class="card-title"><b>{{ product.name }}</h5>
+            <h5 class="card-title"><b>{{ product.name }}</b></h5>
             <h5 class="card-text text-dark">Offer Price: ₹ {{ product.offer_price }}</h5>
             <p>Price: {{ product.price }}</p>
             <a href="" class="btn btn-dark items-center mt-2" style="width: 100%;">Buy Now</a>
@@ -47,25 +49,26 @@
   <div class="container-fluid">
     <div class="row mt-4">
       <div class="col-md-12">
-        <img src="https://www.myg.in/images/companies/1/slices/Banners_Laptop.jpg?1656947029161" class="img-fluid" alt="">
+        <img src="https://www.myg.in/images/companies/1/slices/Banners_Laptop.jpg?1656947029161" class="img-fluid"
+          alt="">
       </div>
     </div>
   </div>
 
   <div class="container">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5">
-      {% for laptop in laptops %}
+      {% for product in products %}
       <div class="col mb-4">
         <div class="card custom-card text-dark bg-opacity-10 h-100">
-          <div class="d-flex justify-content-center align-items-center">
-            <img class="card-img-top rounded-circle p-3" src="{{ laptop.image.url }}" class="card-img-top" alt=""
-              style="height: 250px; width: 250px;">
+          <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
+            <img class="card-img-top rounded-circle p-3" src="{{ product.image.url }}" class="card-img-top" alt=""
+              style="height: 100%; width: 100%; object-fit: contain;">
           </div>
-  
+
           <div class="card-body">
-            <h5 class="card-title"><b>{{ laptop.name }}</h5>
-            <h5 class="card-text text-dark">Offer Price: ₹ {{ laptop.offer_price }}</h5>
-            <p>Price: {{ laptop.price }}</p>
+            <h5 class="card-title"><b>{{ product.name }}</b></h5>
+            <h5 class="card-text text-dark">Offer Price: ₹ {{ product.offer_price }}</h5>
+            <p>Price: {{ product.price }}</p>
             <a href="" class="btn btn-dark items-center mt-2" style="width: 100%;">Buy Now</a>
           </div>
         </div>
@@ -73,32 +76,33 @@
       {% endfor %}
     </div>
   </div>
-  
+
 </section>
 
 <section id="accessories">
   <div class="container-fluid">
     <div class="row mt-4">
       <div class="col-md-12">
-        <img src="https://www.myg.in/images/companies/1/slices/Banners_Accessories.jpg?1656947082106" class="img-fluid" alt="">
+        <img src="https://www.myg.in/images/companies/1/slices/Banners_Accessories.jpg?1656947082106" class="img-fluid"
+          alt="">
       </div>
     </div>
   </div>
 
   <div class="container">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5">
-      {% for desktop in desktops %}
+      {% for product in products %}
       <div class="col mb-4">
         <div class="card custom-card text-dark bg-opacity-10 h-100">
-          <div class="d-flex justify-content-center align-items-center">
-            <img class="card-img-top rounded-circle p-3" src="{{ desktop.image.url }}" class="card-img-top" alt=""
-              style="height: 250px; width: 250px;">
+          <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
+            <img class="card-img-top rounded-circle p-3" src="{{ product.image.url }}" class="card-img-top" alt=""
+              style="height: 100%; width: 100%; object-fit: contain;">
           </div>
 
           <div class="card-body">
-            <h5 class="card-title"><b>{{ desktop.name }}</h5>
-            <h5 class="card-text text-dark">Offer Price: ₹ {{ desktop.offer_price }}</h5>
-            <p>Price: {{ desktop.price }}</p>
+            <h5 class="card-title"><b>{{ product.name }}</b></h5>
+            <h5 class="card-text text-dark">Offer Price: ₹ {{ product.offer_price }}</h5>
+            <p>Price: {{ product.price }}</p>
             <a href="" class="btn btn-dark items-center mt-2" style="width: 100%;">Buy Now</a>
           </div>
         </div>

@@ -67,7 +67,7 @@
                         <ul class="navbar-nav me-auto mx-auto mb-2 mb-lg-0">
 
                             <div class="category-emt me-2">
-                                <li id="apple" class="nav-item me-5" >
+                                <li id="apple" class="brand-emt nav-item me-5" data-brand="apple">
                                     <a class="nav-link emt active text-dark" aria-current="page">
                                         Apple
                                     </a>
@@ -75,7 +75,7 @@
                             </div>
 
                             <div class="category-emt me-2">
-                                <li id="samsung" class="nav-item me-5">
+                                <li id="samsung" class="brand-emt nav-item me-5" data-brand="samsung">
                                     <a class="nav-link emt active text-dark" aria-current="page">
                                         Samsung
                                     </a>
@@ -83,7 +83,7 @@
                             </div>
 
                             <div class="category-emt me-2">
-                                <li id="oneplus" class="nav-item me-5">
+                                <li id="oneplus" class="brand-emt nav-item me-5" data-brand="oneplus">
                                     <a class="nav-link emt active text-dark" aria-current="page">
                                         One Pluse
                                     </a>
@@ -91,7 +91,7 @@
                             </div>
 
                             <div class="category-emt me-2">
-                                <li id="redmi" class="nav-item me-5">
+                                <li id="redmi" class="brand-emt nav-item me-5" data-brand="redmi">
                                     <a class="nav-link emt active text-dark" aria-current="page">
                                         Redmi
                                     </a>
@@ -99,7 +99,7 @@
                             </div>
 
                             <div class="category-emt me-2">
-                                <li id="realme" class="nav-item me-5">
+                                <li id="realme" class="brand-emt nav-item me-5" data-brand="realme">
                                     <a class="nav-link emt active text-dark" aria-current="page">
                                         Realme
                                     </a>
@@ -112,7 +112,8 @@
         </div>
 
         <div class="container">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5">
+            <div id="product_emt" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5"
+                >
                 {% for mobile in mobiles %}
                 <div class="col mb-4">
                     <div class="card custom-card text-dark bg-opacity-10 h-100">
@@ -131,10 +132,84 @@
                 </div>
                 {% endfor %}
             </div>
+
+            <div id="brand_emt" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5"
+                >
+            </div>
         </div>
     </div>
 </section>
 
+<!-- Include jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Include jQuery Cookie plugin from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $('.brand-emt').on('click', function () {
+            $('#product_emt').show(); // Hide the element with id 'product_emt'
+            $('#brand_emt').hide();
+            const brandName = $(this).data('brand');
+
+
+            // Get the CSRF token from the cookie
+            const csrfToken = Cookies.get('csrftoken');
+
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'customer:mobileBrand' %}",
+                data: { brand: brandName },
+
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("X-CSRFToken", csrfToken); // Include CSRF token in the request headers
+                },
+
+                success: function (response) {
+                    console.log('done');
+                    if (response.status_code === 200) {
+                        $('#product_emt').hide(); // Hide the element with id 'product_emt'
+                        $('#brand_emt').show(); // Show the element with id 'brand_emt'
+                        items = response.brandItems
+
+                        var brandEmt = $('#brand_emt');
+                        brandEmt.empty(); // Clear existing content
+
+                        // Iterate over the 'items' array and create the card elements dynamically
+                        for (var i = 0; i < items.length; i++) {
+                            var mobile = items[i];
+                            var cardHtml = `
+                            <div class="col mb-4">
+                                <div class="card custom-card text-dark bg-opacity-10 h-100">
+                                    <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
+                                        <img class="card-img-top rounded-circle p-3" src="${mobile.image}" alt="" style="height: 100%; width: 100%; object-fit: contain;">
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title"><b>${mobile.name}</b></h5>
+                                        <h5 class="card-text text-dark">Offer Price: ₹ ${mobile.offer_price}</h5>
+                                        <p>Price: ${mobile.price}</p>
+                                        <a href="" class="btn btn-dark items-center mt-2" style="width: 100%;">Buy Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            `;
+                            brandEmt.append(cardHtml); // Append the dynamically created card element
+                        }
+                    }
+                },
+                error: function error(error) {
+                    console.error("AJAX call failed!");
+                    console.error(error);
+                },
+
+            });
+        });
+    });
+
+
+</script>
 
 
 

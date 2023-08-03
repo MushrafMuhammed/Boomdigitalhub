@@ -1,4 +1,6 @@
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from boom_digital import settings
 
 from staff.models import Product
 
@@ -25,6 +27,41 @@ def mobilesfun(request):
     )
     
     return render(request, 'customer/mobiles.html',{'mobiles':mobileList})
+
+from django.http import JsonResponse
+
+def mobileBrandfun(request):
+    if request.method == 'POST':
+        brand_name = request.POST.get('brand')
+        print(brand_name)
+        
+        if brand_name:
+            brandItem = Product.objects.filter(brand__name=brand_name)
+            brand_data = list(brandItem.values())
+
+            # Assuming the 'image' field contains the filename, add the full image URL
+            for item in brand_data:
+                item['image'] = f"{settings.MEDIA_URL}{item['image']}"
+
+            return JsonResponse({'brandItems': brand_data, 'status_code': 200})
+        else:
+            return JsonResponse({'error': 'Brand name not provided.', 'status_code': 400})
+    else:
+        return JsonResponse({'error': 'Invalid request method.', 'status_code': 404})
+
+# def mobileBrandfun(request):
+#     if request.method == 'POST':
+#         print(request.brand)
+#         brand_name = request.POST.get('brand')
+#         brandItem = Product.objects.filter(
+#             category__name = brand_name
+#         )
+#         # print(brandItem)
+       
+#         return JsonResponse({'brandItems': brandItem,'status_code':200})
+#     else:
+#         return JsonResponse({'error': 'Invalid request method.','status_code':404})
+    
 
 def laptopfun(request):
     

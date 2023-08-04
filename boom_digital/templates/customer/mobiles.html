@@ -21,6 +21,12 @@
         transform: scale(1.05);
         /* Example scaling effect on hover */
     }
+
+    .brand-emt.active {
+        font-weight: bold;
+        /* Apply the fixed style for the active category */
+        border-bottom: 4px solid #e12454;
+    }
 </style>
 {% endblock %}
 {%block carousel%}
@@ -66,43 +72,43 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mx-auto mb-2 mb-lg-0">
 
-                            <div class="category-emt me-2">
-                                <li id="apple" class="brand-emt nav-item me-5" data-brand="apple">
-                                    <a class="nav-link emt active text-dark" aria-current="page">
+                            <div class="category-emt me-2 d-flex justify-content-center">
+                                <li id="apple" class="brand-emt nav-item me-5 " data-brand="apple">
+                                    <div class="nav-link emt active text-dark" aria-current="page">
                                         Apple
-                                    </a>
+                                    </div>
                                 </li>
                             </div>
 
                             <div class="category-emt me-2">
                                 <li id="samsung" class="brand-emt nav-item me-5" data-brand="samsung">
-                                    <a class="nav-link emt active text-dark" aria-current="page">
+                                    <div class="nav-link emt active text-dark" aria-current="page">
                                         Samsung
-                                    </a>
+                                    </div>
                                 </li>
                             </div>
 
                             <div class="category-emt me-2">
                                 <li id="oneplus" class="brand-emt nav-item me-5" data-brand="oneplus">
-                                    <a class="nav-link emt active text-dark" aria-current="page">
-                                        One Pluse
-                                    </a>
+                                    <div class="nav-link emt active text-dark" aria-current="page">
+                                        Oneplus
+                                    </div>
                                 </li>
                             </div>
 
                             <div class="category-emt me-2">
                                 <li id="redmi" class="brand-emt nav-item me-5" data-brand="redmi">
-                                    <a class="nav-link emt active text-dark" aria-current="page">
+                                    <div class="nav-link emt active text-dark" aria-current="page">
                                         Redmi
-                                    </a>
+                                    </div>
                                 </li>
                             </div>
 
                             <div class="category-emt me-2">
                                 <li id="realme" class="brand-emt nav-item me-5" data-brand="realme">
-                                    <a class="nav-link emt active text-dark" aria-current="page">
+                                    <div class="nav-link emt active text-dark" aria-current="page">
                                         Realme
-                                    </a>
+                                    </div>
                                 </li>
                             </div>
                         </ul>
@@ -113,7 +119,7 @@
 
         <div class="container">
             <div id="product_emt" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5"
-                >
+                style="display: show;">
                 {% for mobile in mobiles %}
                 <div class="col mb-4">
                     <div class="card custom-card text-dark bg-opacity-10 h-100">
@@ -134,7 +140,7 @@
             </div>
 
             <div id="brand_emt" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5"
-                >
+                style="display: hide;">
             </div>
         </div>
     </div>
@@ -149,11 +155,19 @@
 <script>
 
     $(document).ready(function () {
-        $('.brand-emt').on('click', function () {
-            $('#product_emt').show(); // Hide the element with id 'product_emt'
-            $('#brand_emt').hide();
-            const brandName = $(this).data('brand');
 
+         // Function to handle the click on brand-emt
+         $('.brand-emt').on('click', function() {
+            // Remove the active class from all brand-emt
+            $('.brand-emt.active').removeClass('active');
+            // Add the active class to the clicked brand-emt
+            $(this).addClass('active');
+        });
+        
+
+         // Function to handle the click on brand-emt then get their on products
+        $('.brand-emt').on('click', function () {
+            const brandName = $(this).data('brand');
 
             // Get the CSRF token from the cookie
             const csrfToken = Cookies.get('csrftoken');

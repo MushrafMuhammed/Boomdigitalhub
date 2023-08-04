@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from boom_digital import settings
+from django.http import JsonResponse
 
 from staff.models import Product
 
@@ -25,15 +26,12 @@ def mobilesfun(request):
     mobileList = Product.objects.filter(
         category__name = 'Mobiles'
     )
-    
     return render(request, 'customer/mobiles.html',{'mobiles':mobileList})
-
-from django.http import JsonResponse
 
 def mobileBrandfun(request):
     if request.method == 'POST':
         brand_name = request.POST.get('brand')
-        print(brand_name)
+        # print(brand_name)
         
         if brand_name:
             brandItem = Product.objects.filter(brand__name=brand_name)

@@ -1,0 +1,63 @@
+<form method="POST" id="form_id">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Product No</label>
+        <select name="p_number" id="product" class="form-control" data-bs-toggle="dropdown" aria-expanded="false">
+            {% for product in products %}
+            <option value="{{product.id}}">{{ product.p_name | title }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Current Stock</label>
+        <input type="text" class="form-control" id="stock_field" name="p_category">
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">New Stock</label>
+        <input type="number" class="form-control" id="categoryField" name="new_stock" min="1">
+    </div>
+    <button type="submit" class="btn btn-success">Update</button>
+</form>
+</div>
+<script>
+$(document).ready(function () {
+    $.ajaxSetup({
+        headers: {
+            "X-CSRFToken": $('[name=csrfmiddlewaretoken]').val()
+        }
+    })
+
+    $('#product').change(function () {
+
+        $.ajax({
+
+            type: 'POST',
+            url: "{% url 'seller:stock_update' %}",
+            data: {
+                'product_id': $(this).val()
+            },
+
+            success: function (response) {
+
+                let res = response.stock
+                $('#stock_field').val(res)
+            }
+        })
+    })
+})
+
+def update_stock(request):
+    products = Product.objects.filter(
+        seller=request.session['seller']).values('id', 'p_name')
+    if request.method == 'POST':
+        prodnum = request.POST['p_number']
+        new_stock = request.POST['new_stock']
+        product1 = Product.objects.get(id=prodnum)
+        product1.p_stock += int(new_stock)
+        product1.save()
+
+        def stock_update(request):
+        product_id = request.POST['product_id']
+        product = Product.objects.filter(id=product_id).values('p_stock')
+        current_stock = product[0]['p_stock']
+        return JsonResponse({'stock': current_stock})

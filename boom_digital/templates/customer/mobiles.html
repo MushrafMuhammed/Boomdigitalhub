@@ -69,48 +69,20 @@
         <div class="row mt-3">
             <nav class="navbar navbar-expand-lg navbar-dark pb-1">
                 <div class="container">
+                    
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mx-auto mb-2 mb-lg-0">
-
+                            
+                            {%for brand in brands %}
                             <div class="category-emt me-2 d-flex justify-content-center">
-                                <li id="apple" class="brand-emt nav-item me-5 " data-brand="apple">
+                                <li id="{{brand.name}}" class="brand-emt nav-item me-5 " data-brand="{{brand.name}}">
                                     <div class="nav-link emt active text-dark" aria-current="page">
-                                        Apple
+                                        {{brand.name | title}}
                                     </div>
                                 </li>
                             </div>
-
-                            <div class="category-emt me-2">
-                                <li id="samsung" class="brand-emt nav-item me-5" data-brand="samsung">
-                                    <div class="nav-link emt active text-dark" aria-current="page">
-                                        Samsung
-                                    </div>
-                                </li>
-                            </div>
-
-                            <div class="category-emt me-2">
-                                <li id="oneplus" class="brand-emt nav-item me-5" data-brand="oneplus">
-                                    <div class="nav-link emt active text-dark" aria-current="page">
-                                        Oneplus
-                                    </div>
-                                </li>
-                            </div>
-
-                            <div class="category-emt me-2">
-                                <li id="redmi" class="brand-emt nav-item me-5" data-brand="redmi">
-                                    <div class="nav-link emt active text-dark" aria-current="page">
-                                        Redmi
-                                    </div>
-                                </li>
-                            </div>
-
-                            <div class="category-emt me-2">
-                                <li id="realme" class="brand-emt nav-item me-5" data-brand="realme">
-                                    <div class="nav-link emt active text-dark" aria-current="page">
-                                        Realme
-                                    </div>
-                                </li>
-                            </div>
+                            {%endfor%}
+                            
                         </ul>
                     </div>
                 </div>

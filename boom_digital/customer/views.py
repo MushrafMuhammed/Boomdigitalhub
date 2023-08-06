@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from administrator.models import Brand, Category
 from boom_digital import settings
 from django.http import JsonResponse
 
@@ -9,8 +10,7 @@ from staff.models import Product
 
 def homefun(request):
     productList = Product.objects.all()
-    laptop_list = Product.objects.filter(category__name='Laptop')
-    laptop_list = Product.objects.filter(category__name='Laptop')
+    laptop_list = Product.objects.filter(category__name='Laptops')
     desktop_list = Product.objects.filter(category__name='Desktop')
     return render(request, 'customer/home.html',{'products':productList,'laptops':laptop_list,'desktops':desktop_list})
 
@@ -23,18 +23,54 @@ def offersfun(request):
     return render(request, 'customer/offers.html')
 
 def mobilesfun(request):
+    brandList = Brand.objects.filter(
+        category__name = 'Mobiles'
+    )
     mobileList = Product.objects.filter(
         category__name = 'Mobiles'
     )
-    return render(request, 'customer/mobiles.html',{'mobiles':mobileList})
+    return render(request, 'customer/mobiles.html',{'brands':brandList,'mobiles':mobileList})
 
-def mobileBrandfun(request):
+def getBrand(request):
     if request.method == 'POST':
         brand_name = request.POST.get('brand')
+        categoryId = request.POST.get('categoryId')
         # print(brand_name)
         
         if brand_name:
-            brandItem = Product.objects.filter(brand__name=brand_name)
+            brandItem = Product.objects.filter(brand__name=brand_name,category_id = categoryId)
+            brand_data = list(brandItem.values())
+
+            # Assuming the 'image' field contains the filename, add the full image URL
+            for item in brand_data:
+                item['image'] = f"{settings.MEDIA_URL}{item['image']}"
+
+            return JsonResponse({'brandItems': brand_data, 'status_code': 200})
+        else:
+            return JsonResponse({'error': 'Brand name not provided.', 'status_code': 400})
+    else:
+        return JsonResponse({'error': 'Invalid request method.', 'status_code': 404})
+    
+
+def laptopfun(request):
+    brandList = Brand.objects.filter(
+        category__name = 'Laptops'
+    )
+    laptopList = Product.objects.filter(
+        category__name = 'Laptops'
+    )
+    category = Category.objects.get(name='Laptops')
+    categoryId = category.id
+    return render(request, 'customer/laptop.html', {'brands':brandList,'laptops':laptopList,'category_id':categoryId})
+
+def laptopBrandfun(request):
+    if request.method == 'POST':
+        brand_name = request.POST.get('brand')
+        categoryId = request.POST.get('categoryId')
+
+        
+        if brand_name:
+            brandItem = Product.objects.filter(brand__name=brand_name,category_id = categoryId)
             brand_data = list(brandItem.values())
 
             # Assuming the 'image' field contains the filename, add the full image URL
@@ -47,27 +83,16 @@ def mobileBrandfun(request):
     else:
         return JsonResponse({'error': 'Invalid request method.', 'status_code': 404})
 
-# def mobileBrandfun(request):
-#     if request.method == 'POST':
-#         print(request.brand)
-#         brand_name = request.POST.get('brand')
-#         brandItem = Product.objects.filter(
-#             category__name = brand_name
-#         )
-#         # print(brandItem)
-       
-#         return JsonResponse({'brandItems': brandItem,'status_code':200})
-#     else:
-#         return JsonResponse({'error': 'Invalid request method.','status_code':404})
-    
-
-def laptopfun(request):
-    
-    return render(request, 'customer/laptop.html')
-
 def desktopfun(request):
-    
-    return render(request, 'customer/desktop.html')
+    brandList = Brand.objects.filter(
+        category__name = 'Desktops'
+    )
+    desktopList = Product.objects.filter(
+        category__name = 'Desktops'
+    )
+    category = Category.objects.get(name='Desktops')
+    categoryId = category.id
+    return render(request, 'customer/desktop.html',{'desktops':desktopList,'brands':brandList,'category_id':categoryId})
 
 def tabletfun(request):
     

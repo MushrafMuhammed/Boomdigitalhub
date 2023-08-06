@@ -1,4 +1,5 @@
 from decimal import Decimal
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 
 from administrator.models import Brand, Category, Employee
@@ -80,6 +81,25 @@ def newProductfun(request):
         newProduct.save()
         msg = "New product added"
     return render(request, "employee/newProduct.html",{'categories':categoryList,'brands':brandList,'successMessage':msg})
+
+from django.http import JsonResponse
+
+def categoryItemfun(request):
+    if request.method == 'POST':
+        selectedCategory = request.POST.get('category')
+        # print(selectedCategory)
+
+        if selectedCategory:
+            selectedBrands = Brand.objects.filter(
+                category_id=selectedCategory
+            ).values()  # Convert QuerySet to a list of dictionaries
+            return JsonResponse({'brands': list(selectedBrands), 'status_code': 200})
+        else:
+            return JsonResponse({'error': 'Brand name not provided.', 'status_code': 400})
+    else:
+        return JsonResponse({'error': 'Invalid request method.', 'status_code': 404})
+
+
 
 
 def productListfun(request):

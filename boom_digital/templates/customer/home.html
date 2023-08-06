@@ -57,18 +57,18 @@
 
   <div class="container">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5">
-      {% for product in products %}
+      {% for laptop in laptops %}
       <div class="col mb-4">
         <div class="card custom-card text-dark bg-opacity-10 h-100">
           <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
-            <img class="card-img-top rounded-circle p-3" src="{{ product.image.url }}" class="card-img-top" alt=""
+            <img class="card-img-top rounded-circle p-3" src="{{ laptop.image.url }}" class="card-img-top" alt=""
               style="height: 100%; width: 100%; object-fit: contain;">
           </div>
 
           <div class="card-body">
-            <h5 class="card-title"><b>{{ product.name }}</b></h5>
-            <h5 class="card-text text-dark">Offer Price: ₹ {{ product.offer_price }}</h5>
-            <p>Price: {{ product.price }}</p>
+            <h5 class="card-title"><b>{{ laptop.name }}</b></h5>
+            <h5 class="card-text text-dark">Offer Price: ₹ {{ laptop.offer_price }}</h5>
+            <p>Price: {{ laptop.price }}</p>
             <a href="" class="btn btn-dark items-center mt-2" style="width: 100%;">Buy Now</a>
           </div>
         </div>

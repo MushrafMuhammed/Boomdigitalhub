@@ -109,6 +109,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
 <script>
+
     $(document).ready(function(){
         $.ajaxSetup({
             headers: {
@@ -146,6 +147,10 @@
         }
           
     });
+
+    {% if successMessage %}
+    alert('{{successMessage}}')
+    {% endif %}
     
 </script>
 

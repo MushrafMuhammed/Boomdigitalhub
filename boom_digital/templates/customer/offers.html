@@ -35,24 +35,26 @@
 {% block content %}
 <section class="" id="product-section">
     <div class="container">
-        <h1 class="text-center font-weight-bolder pt-5"><b>Week’s Highlights</b></h1>
-
-        <div class="row mt-3">
-            <div class="col-md-3">
-                <div class="card custom-card text-dark bg-opacity-10 mb-5">
-                    <div class="d-flex justify-content-center align-items-center">
-                        <img class="card-img-top rounded-circle p-3 " src="" class="card-img-top" alt=""
-                            style="height: 330px; width: 330px;">
+        <h1 class="text-center font-weight-bolder pt-5"><b>Highlights of the week</b></h1>
+        <div id="product_emt" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5"
+            style="display: show;">
+            {% for offerProduct in offerProducts %}
+            <div class="col mb-4">
+                <div class="card custom-card text-dark bg-opacity-10 h-100">
+                    <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
+                        <img class="card-img-top rounded-circle p-3" src="{{ offerProduct.image.url }}"
+                            class="card-img-top" alt="" style="height: 100%; width: 100%; object-fit: contain;">
                     </div>
 
-                    <div class="card-body text-dark">
-                        <h5 class="card-title"><b>Hp G7 250</h5>
-                        <p class="">$ 300</p>
-                        <p class="card-text text-dark"><b>Best Price: $ 280</b></p>
-                        <a href="" class="btn btn-dark items-center" style="width: 100%;">Buy Now</a>
+                    <div class="card-body">
+                        <h5 class="card-title"><b>{{ offerProduct.name }}</b></h5>
+                        <h5 class="card-text text-dark">Offer Price: ₹ {{ offerProduct.offer_price }}</h5>
+                        <p>Price: {{ offerProduct.price }}</p>
+                        <a href="" class="btn btn-dark items-center mt-2" style="width: 100%;">Buy Now</a>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
     </div>
 </section>

@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from administrator.models import Brand, Category
 from boom_digital import settings
 from django.http import JsonResponse
@@ -19,8 +19,9 @@ def offers_hoverfun(request):
     return render(request, 'customer/offers_hover.html')
 
 def offersfun(request):
-    
-    return render(request, 'customer/offers.html')
+    # Filter products with non-null offer_price
+    offerProducts = Product.objects.filter(offer_price__isnull=False)
+    return render(request, 'customer/offers.html', {'offerProducts': offerProducts})
 
 def mobilesfun(request):
     brandList = Brand.objects.filter(
@@ -29,7 +30,9 @@ def mobilesfun(request):
     mobileList = Product.objects.filter(
         category__name = 'Mobiles'
     )
-    return render(request, 'customer/mobiles.html',{'brands':brandList,'mobiles':mobileList})
+    category = Category.objects.get(name = 'Mobiles')
+    categoryId = category.id
+    return render(request, 'customer/mobiles.html',{'brands':brandList,'mobiles':mobileList,'category_id':categoryId})
 
 def getBrand(request):
     if request.method == 'POST':
@@ -95,8 +98,15 @@ def desktopfun(request):
     return render(request, 'customer/desktop.html',{'desktops':desktopList,'brands':brandList,'category_id':categoryId})
 
 def tabletfun(request):
-    
-    return render(request, 'customer/tablets.html')
+    brandList = Brand.objects.filter(
+        category__name = 'Tablets'
+    )
+    tabletList = Product.objects.filter(
+        category__name = 'Tablets'
+    )
+    category = Category.objects.get(name='Tablets')
+    categoryId = category.id
+    return render(request, 'customer/tablets.html',{'tablets':tabletList,'brands':brandList,'category_id':categoryId})
 
 def accessoriesfun(request):
     

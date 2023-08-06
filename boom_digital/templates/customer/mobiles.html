@@ -110,6 +110,7 @@
                 </div>
                 {% endfor %}
             </div>
+            <input id="category_id" type="text" value="{{category_id}}" style="display: none;">
 
             <div id="brand_emt" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5"
                 style="display: hide;">
@@ -140,14 +141,15 @@
          // Function to handle the click on brand-emt then get their on products
         $('.brand-emt').on('click', function () {
             const brandName = $(this).data('brand');
+            const category_id = $('#category_id').val();
 
             // Get the CSRF token from the cookie
             const csrfToken = Cookies.get('csrftoken');
 
             $.ajax({
                 type: 'POST',
-                url: "{% url 'customer:mobileBrand' %}",
-                data: { brand: brandName },
+                url: "{% url 'customer:getBrand' %}",
+                data: { brand: brandName, categoryId :category_id},
 
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("X-CSRFToken", csrfToken); // Include CSRF token in the request headers

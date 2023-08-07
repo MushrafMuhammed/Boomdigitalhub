@@ -109,5 +109,7 @@ def tabletfun(request):
     return render(request, 'customer/tablets.html',{'tablets':tabletList,'brands':brandList,'category_id':categoryId})
 
 def accessoriesfun(request):
-    
-    return render(request, 'customer/accessories.html')
+    accessories = Product.objects.filter(
+        category__name = 'Accessories'
+    )
+    return render(request, 'customer/accessories.html',{'accessories':accessories})

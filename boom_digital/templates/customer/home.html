@@ -1,4 +1,5 @@
 {% extends 'customer/layout.html' %}
+{% load static %}
 {% block style %}
 <style>
   .custom-card {
@@ -24,22 +25,24 @@
   <div class="container">
     <h1 class="text-center pt-2">Products</h1>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5">
-      {% for product in products %}
-      <div class="col mb-4">
-        <div class="card custom-card text-dark bg-opacity-10 h-100">
-          <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
-            <img class="card-img-top rounded-circle p-3" src="{{ product.image.url }}" class="card-img-top" alt=""
-              style="height: 100%; width: 100%; object-fit: contain;">
-          </div>
+      {% for product in products|slice:":10" %}
+      <a href="{% url 'customer:productDetails' product.id %}" style="text-decoration: none;">
+        <div class="col mb-4">
+          <div class="card custom-card text-dark bg-opacity-10 h-100">
+            <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
+              <img class="card-img-top rounded-circle p-3" src="{{ product.image.url }}" class="card-img-top" alt=""
+                style="height: 100%; width: 100%; object-fit: contain;">
+            </div>
 
-          <div class="card-body">
-            <h5 class="card-title"><b>{{ product.name }}</b></h5>
-            <h5 class="card-text text-dark">Offer Price: ₹ {{ product.offer_price }}</h5>
-            <p>Price: {{ product.price }}</p>
-            <a href="" class="btn btn-dark items-center mt-2" style="width: 100%;">Buy Now</a>
+            <div class="card-body">
+              <h5 class="card-title"><b>{{ product.name }}</b></h5>
+              <h5 class="card-text text-dark">Offer Price: ₹ {{ product.offer_price }}</h5>
+              <p>Price: {{ product.price }}</p>
+
+            </div>
           </div>
         </div>
-      </div>
+      </a>
       {% endfor %}
     </div>
   </div>
@@ -49,64 +52,178 @@
   <div class="container-fluid">
     <div class="row mt-4">
       <div class="col-md-12">
-        <img src="https://www.myg.in/images/companies/1/slices/Banners_Laptop.jpg?1656947029161" class="img-fluid"
-          alt="">
+        <a href="{% url 'customer:laptop' %}">
+          <img src="https://drive.google.com/uc?export=download&id=1NC5S2_7FOuJtNsuMyp6JKblooNT7QN_d" class="img-fluid"
+            alt="">
+        </a>
       </div>
     </div>
   </div>
 
   <div class="container">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5">
-      {% for laptop in laptops %}
-      <div class="col mb-4">
-        <div class="card custom-card text-dark bg-opacity-10 h-100">
-          <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
-            <img class="card-img-top rounded-circle p-3" src="{{ laptop.image.url }}" class="card-img-top" alt=""
-              style="height: 100%; width: 100%; object-fit: contain;">
-          </div>
+      {% for laptop in laptops|slice:":4" %}
+      <a href="{% url 'customer:productDetails' laptop.id %}" style="text-decoration: none;">
+        <div class="col mb-4">
+          <div class="card custom-card text-dark bg-opacity-10 h-100">
+            <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
+              <img class="card-img-top rounded-circle p-3" src="{{ laptop.image.url }}" class="card-img-top" alt=""
+                style="height: 100%; width: 100%; object-fit: contain;">
+            </div>
 
-          <div class="card-body">
-            <h5 class="card-title"><b>{{ laptop.name }}</b></h5>
-            <h5 class="card-text text-dark">Offer Price: ₹ {{ laptop.offer_price }}</h5>
-            <p>Price: {{ laptop.price }}</p>
-            <a href="" class="btn btn-dark items-center mt-2" style="width: 100%;">Buy Now</a>
+            <div class="card-body">
+              <h5 class="card-title"><b>{{ laptop.name }}</b></h5>
+              <h5 class="card-text text-dark">Offer Price: ₹ {{ laptop.offer_price }}</h5>
+              <p>Price: {{ laptop.price }}</p>
+            </div>
           </div>
         </div>
-      </div>
+      </a>
       {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+<section id="Desktop">
+  <div class="container-fluid">
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <a href="{% url 'customer:desktop' %}">
+          <img src="https://drive.google.com/uc?export=download&id=1voZ60Y6wVhSe-trei3dhJNMt_of-2n4y" class="img-fluid"
+            alt="">
+        </a>
+      </div>
     </div>
   </div>
 
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5">
+      {% for desktop in desktops|slice:":4" %}
+      <a href="{% url 'customer:productDetails' desktop.id %}" style="text-decoration: none;">
+        <div class="col mb-4">
+          <div class="card custom-card text-dark bg-opacity-10 h-100">
+            <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
+              <img class="card-img-top rounded-circle p-3" src="{{ desktop.image.url }}" class="card-img-top" alt=""
+                style="height: 100%; width: 100%; object-fit: contain;">
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title"><b>{{ desktop.name }}</b></h5>
+              <h5 class="card-text text-dark">Offer Price: ₹ {{ desktop.offer_price }}</h5>
+              <p>Price: {{ desktop.price }}</p>
+            </div>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="Mobiles">
+  <div class="container-fluid">
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <a href="{% url 'customer:mobile' %}">
+          <img src="https://drive.google.com/uc?export=download&id=1ZPZI1LMdgigBWgjL_HQBHDXU-0UaVP7k" class="img-fluid"
+            alt="">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5">
+      {% for mobile in mobiles|slice:":4" %}
+      <a href="{% url 'customer:productDetails' mobile.id %}" style="text-decoration: none;">
+        <div class="col mb-4">
+          <div class="card custom-card text-dark bg-opacity-10 h-100">
+            <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
+              <img class="card-img-top rounded-circle p-3" src="{{ mobile.image.url }}" class="card-img-top" alt=""
+                style="height: 100%; width: 100%; object-fit: contain;">
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title"><b>{{ mobile.name }}</b></h5>
+              <h5 class="card-text text-dark">Offer Price: ₹ {{ mobile.offer_price }}</h5>
+              <p>Price: {{ mobile.price }}</p>
+            </div>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="tablets">
+  <div class="container-fluid">
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <a href="{% url 'customer:tablet' %}">
+          <img src="https://drive.google.com/uc?export=download&id=1bs6g73L5rjeryxJLzyJ4BgrwPpm5v2_h" class="img-fluid"
+            alt="">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5">
+      {% for tablet in tablets|slice:":4" %}
+      <a href="{% url 'customer:productDetails' tablet.id %}" style="text-decoration: none;">
+        <div class="col mb-4">
+          <div class="card custom-card text-dark bg-opacity-10 h-100">
+            <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
+              <img class="card-img-top rounded-circle p-3" src="{{ tablet.image.url }}" class="card-img-top" alt=""
+                style="height: 100%; width: 100%; object-fit: contain;">
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title"><b>{{ tablet.name }}</b></h5>
+              <h5 class="card-text text-dark">Offer Price: ₹ {{ tablet.offer_price }}</h5>
+              <p>Price: {{ tablet.price }}</p>
+            </div>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
 </section>
 
 <section id="accessories">
   <div class="container-fluid">
     <div class="row mt-4">
       <div class="col-md-12">
-        <img src="https://www.myg.in/images/companies/1/slices/Banners_Accessories.jpg?1656947082106" class="img-fluid"
-          alt="">
+        <a href="{% url 'customer:accessories' %}">
+          <img src="https://drive.google.com/uc?export=download&id=14vJSklAF1V2j1Ukw80zZrm45W1fQS0Fc" class="img-fluid"
+            alt="">
+        </a>
       </div>
     </div>
   </div>
 
   <div class="container">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5">
-      {% for product in products %}
-      <div class="col mb-4">
-        <div class="card custom-card text-dark bg-opacity-10 h-100">
-          <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
-            <img class="card-img-top rounded-circle p-3" src="{{ product.image.url }}" class="card-img-top" alt=""
-              style="height: 100%; width: 100%; object-fit: contain;">
-          </div>
+      {% for accessory in accessories|slice:":4"%}
+      <a href="{% url 'customer:productDetails' accessory.id %}" style="text-decoration: none;">
+        <div class="col mb-4">
+          <div class="card custom-card text-dark bg-opacity-10 h-100">
+            <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
+              <img class="card-img-top rounded-circle p-3" src="{{ accessory.image.url }}" class="card-img-top" alt=""
+                style="height: 100%; width: 100%; object-fit: contain;">
+            </div>
 
-          <div class="card-body">
-            <h5 class="card-title"><b>{{ product.name }}</b></h5>
-            <h5 class="card-text text-dark">Offer Price: ₹ {{ product.offer_price }}</h5>
-            <p>Price: {{ product.price }}</p>
-            <a href="" class="btn btn-dark items-center mt-2" style="width: 100%;">Buy Now</a>
+            <div class="card-body">
+              <h5 class="card-title"><b>{{ accessory.name }}</b></h5>
+              <h5 class="card-text text-dark">Offer Price: ₹ {{ accessory.offer_price }}</h5>
+              <p>Price: {{ accessory.price }}</p>
+            </div>
           </div>
         </div>
-      </div>
+      </a>
       {% endfor %}
     </div>
   </div>

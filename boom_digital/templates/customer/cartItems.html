@@ -1,0 +1,158 @@
+{% extends 'customer/layout.html' %}
+{% load static %}
+{% block style %}
+{%endblock%}
+
+{%block carousel%}
+{% endblock %}
+
+{% block content %}
+
+<section class="bg-light pt-3" id="card-section">
+    <div class="container">
+        <div class="row">
+            <div class=" me-3">
+                <div c lass="row p-1">
+                    <div class="bg-primary pt-4 pb-3 text-center card">
+                        <h5 class="text-light h5t-3 pb-2">
+                            CHECKOUT <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red"
+                                class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                            </svg>
+                            PLACE ORDER <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red"
+                                class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                            </svg>
+                            PATMENT
+                        </h5>
+                    </div>
+                </div>
+                <div class="row p-1">
+                    <div class="card pt-3 pb-2">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <table class="table">
+                                <thead>
+                                    <tr style="text-align: center;">
+                                        <th></th>
+                                        <th>PRODUCT</th>
+                                        <th>PRICE</th>
+                                        <th>QUANTITY</th>
+                                        <th>SUBTOTAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for cartProduct in cartProducts %}
+                                    <tr style="text-align: center; text-align: center; vertical-align: middle;">
+                                        <td>
+                                            <a href="{% url 'customer:delCart' cartProduct.id %}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                                    fill="red" class="bi bi-trash" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                                                    <path
+                                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                                                </svg></a>
+                                        </td>
+                                        <td>
+                                            <img src="{{ cartProduct.product_details.image.url }}" alt="cartProduct 1"
+                                                class="img-fluid" style="width: 105px; height: 100px;">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="price"
+                                                value="$  {{cartProduct.product_details.price}}" readonly>
+                                        </td>
+                                        <td>
+                                            <input class="form-control quantity" type="number" 
+                                                data-item="{{cartProduct.product_details.id}}"
+                                                value="{{cartProduct.quantity}}" min="1"
+                                                max="{{cartProduct.product_details.current_stock}}"
+                                                >
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control item_subtotal"
+                                                data-item="{{ cartProduct.product_details.id }}"
+                                                value="{{ cartProduct.product_details.price }}" readonly>
+                                        </td>
+                                    </tr>
+                                    {%endfor%}
+
+
+                                </tbody>
+                            </table>
+
+                            <div class="row">
+                                <div class="col"><b>Grand Total</b></div>
+                                <div class="col" style="text-align: right;" id="grand_total"><b>₹
+                                        <strong>{{grandTotal}}</strong></b>
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-center text-center mt-4">
+                                <a class="btn btn-dark" style="width: 50%;" href="{% url 'customer:checkout' %}">Proceed
+                                    to Checkout</a>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+</section>
+
+
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"></script>
+<script>
+
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                "X-CSRFToken": '{{ csrf_token }}'
+            }
+        });
+
+        // Quantity and price change
+        $('.quantity').change(function () {
+            productId = $(this).attr('data-item'),
+            quantity = $(this).val()
+            $.ajax({
+                url: "{% url 'customer:update_itemTotal' %}",
+                data: {
+                    product_id : productId,
+                    quantity : quantity
+                    
+                },
+                method: 'POST',
+
+                success: function (response) {
+                    $('.item_subtotal[data-item="' + productId + '"]').val(response.subTotal.toFixed(2));
+
+                    var total = 0;
+                    $('.item_subtotal').each(function () {
+                        total += parseFloat($(this).val());
+                    });
+
+                    $('#grand_total').html(total.toFixed(2));
+                }
+            });
+        });
+    });
+
+    {% if cart_msg %}
+    <script>
+        cart_msg = request.
+        alert("{{ cart_msg }}");
+</script>
+{% endif %}
+</script>
+{% endblock %}

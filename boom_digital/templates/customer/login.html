@@ -29,7 +29,6 @@
                                 <div class="col-md-6 col-lg-7 d-flex align-items-center">
                                     <div class="card-body p-4 p-lg-5 text-black">
 
-                                        {{ errorMessage }}
                                         <form method="POST">
                                             {% csrf_token %}
 
@@ -48,7 +47,7 @@
                                             </div>
 
                                             <div class="mb-4">
-                                                <label class="form-label">Password</label>
+                                                <label class="form-label">Passworfgdfd</label>
                                                 <input type="password" name="password" id="password"
                                                     class="form-control form-control-lg" />
 
@@ -57,10 +56,12 @@
                                             <div class="pt-1 mb-4">
                                                 <button class="btn btn-dark btn-lg btn-block"
                                                     type="submit">Login</button>
-                                            </div>
-
-
-
+                                            </div><br>
+                                            <hr>
+                                            <div class="text-center">
+                                                <p>Create your account</p>
+                                                <a href="{% url 'customer:newCustomer'%}" class="btn btn-light" type="submit" style="width:80%">Sign Up</a>
+                                              </div>
                                         </form>
 
                                     </div>
@@ -72,6 +73,13 @@
             </div>
         </section>
     </div>
+
+    <script>
+        {% if error_message %}
+        alert('{{error_message}}');
+        {% endif %}
+    </script>
+
 </body>
 
 </html>

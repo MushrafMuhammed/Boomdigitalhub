@@ -40,3 +40,12 @@ class Employee(models.Model):
     
     class Meta :
         db_table = 'employee'
+
+class Customer(models.Model) :
+    name = models.CharField(max_length=50)
+    phone = models.CharField(max_length=15,unique=True)
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=20)
+
+    class Meta:
+        db_table = 'customer'

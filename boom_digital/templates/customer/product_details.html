@@ -1,0 +1,32 @@
+{% extends 'customer/layout.html' %}
+{% load static %}
+{% block style %}
+{%endblock%}
+
+{%block carousel%}
+{%endblock%}
+
+
+{% block content %}
+
+ <!-- Product Details Section -->
+ <section class="container mt-4">
+    <div class="row">
+      <div class="col-md-4">
+        <img src="{{ product.image.url }}" alt="Product Image" class="img-fluid">
+      </div>
+      <div class="col-md-8">
+        <h2>{{ product.name }}</h2>
+        <p class="lead">{{ product.description }}</p>
+        {% if product.offer_price %}
+        <strong style="font-size: 20px; color: brown;">- 5% </strong> ₹ {{ product.offer_price }}</p>
+        {% endif %}
+        <p><strong>Price:</strong> ₹ {{product.price}}</p>
+        <p><strong>Availability:</strong> {{product.current_stock}}</p>
+        <a href="{% url 'customer:cart' product.id %}" class="btn btn-dark items-center">Add to Cart</a>
+
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

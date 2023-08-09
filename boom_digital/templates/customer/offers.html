@@ -2,12 +2,30 @@
 
 {% block style %}
 <style>
+    .emt:hover {
+        border-bottom: 4px solid #e12454;
+        font-weight: bold;
+    }
+
     .custom-card {
         border: none;
         /* Remove the border */
         box-sizing: border-box;
         background-color: #f7f7f7;
         border-radius: 1.38888889vw;
+    }
+
+    .custom-card:hover {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        /* Example box shadow for the hover effect */
+        transform: scale(1.05);
+        /* Example scaling effect on hover */
+    }
+
+    .brand-emt.active {
+        font-weight: bold;
+        /* Apply the fixed style for the active category */
+        border-bottom: 4px solid #e12454;
     }
 </style>
 {% endblock %}
@@ -16,7 +34,8 @@
     <div id="carouselExample" class="carousel slide">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img style="height: 410px;" src="https://selzy.com/en/blog/wp-content/uploads/2023/02/b2c-email-marketing-practices_1920.png"
+                <img style="height: 410px;"
+                    src="https://selzy.com/en/blog/wp-content/uploads/2023/02/b2c-email-marketing-practices_1920.png"
                     class="d-block w-100" alt="...">
             </div>
         </div>
@@ -39,21 +58,22 @@
         <div id="product_emt" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5"
             style="display: show;">
             {% for offerProduct in offerProducts %}
-            <div class="col mb-4">
-                <div class="card custom-card text-dark bg-opacity-10 h-100">
-                    <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
-                        <img class="card-img-top rounded-circle p-3" src="{{ offerProduct.image.url }}"
-                            class="card-img-top" alt="" style="height: 100%; width: 100%; object-fit: contain;">
-                    </div>
+            <a href="{% url 'customer:productDetails' offerProduct.id %}" style="text-decoration: none;">
+                <div class="col mb-4">
+                    <div class="card custom-card text-dark bg-opacity-10 h-100">
+                        <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
+                            <img class="card-img-top rounded-circle p-3" src="{{ offerProduct.image.url }}"
+                                class="card-img-top" alt="" style="height: 100%; width: 100%; object-fit: contain;">
+                        </div>
 
-                    <div class="card-body">
-                        <h5 class="card-title"><b>{{ offerProduct.name }}</b></h5>
-                        <h5 class="card-text text-dark">Offer Price: ₹ {{ offerProduct.offer_price }}</h5>
-                        <p>Price: {{ offerProduct.price }}</p>
-                        <a href="" class="btn btn-dark items-center mt-2" style="width: 100%;">Buy Now</a>
+                        <div class="card-body">
+                            <h5 class="card-title"><b>{{ offerProduct.name }}</b></h5>
+                            <h5 class="card-text text-dark">Offer Price: ₹ {{ offerProduct.offer_price }}</h5>
+                            <p>Price: {{ offerProduct.price }}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
             {% endfor %}
         </div>
     </div>

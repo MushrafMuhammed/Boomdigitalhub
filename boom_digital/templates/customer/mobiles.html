@@ -69,10 +69,10 @@
         <div class="row mt-3">
             <nav class="navbar navbar-expand-lg navbar-dark pb-1">
                 <div class="container">
-                    
+
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mx-auto mb-2 mb-lg-0">
-                            
+
                             {%for brand in brands %}
                             <div class="category-emt me-2 d-flex justify-content-center">
                                 <li id="{{brand.name}}" class="brand-emt nav-item me-5 " data-brand="{{brand.name}}">
@@ -82,7 +82,7 @@
                                 </li>
                             </div>
                             {%endfor%}
-                            
+
                         </ul>
                     </div>
                 </div>
@@ -93,21 +93,22 @@
             <div id="product_emt" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5"
                 style="display: show;">
                 {% for mobile in mobiles %}
-                <div class="col mb-4">
-                    <div class="card custom-card text-dark bg-opacity-10 h-100">
-                        <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
-                            <img class="card-img-top rounded-circle p-3" src="{{ mobile.image.url }}"
-                                class="card-img-top" alt="" style="height: 100%; width: 100%; object-fit: contain;">
-                        </div>
+                <a href="{% url 'customer:productDetails' mobile.id %}" style="text-decoration: none;">
+                    <div class="col mb-4">
+                        <div class="card custom-card text-dark bg-opacity-10 h-100">
+                            <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
+                                <img class="card-img-top rounded-circle p-3" src="{{ mobile.image.url }}"
+                                    class="card-img-top" alt="" style="height: 100%; width: 100%; object-fit: contain;">
+                            </div>
 
-                        <div class="card-body">
-                            <h5 class="card-title"><b>{{ mobile.name }}</b></h5>
-                            <h5 class="card-text text-dark">Offer Price: ₹ {{ mobile.offer_price }}</h5>
-                            <p>Price: {{ mobile.price }}</p>
-                            <a href="" class="btn btn-dark items-center mt-2" style="width: 100%;">Buy Now</a>
+                            <div class="card-body">
+                                <h5 class="card-title"><b>{{ mobile.name }}</b></h5>
+                                <h5 class="card-text text-dark">Offer Price: ₹ {{ mobile.offer_price }}</h5>
+                                <p>Price: {{ mobile.price }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
                 {% endfor %}
             </div>
             <input id="category_id" type="text" value="{{category_id}}" style="display: none;">
@@ -129,16 +130,16 @@
 
     $(document).ready(function () {
 
-         // Function to handle the click on brand-emt
-         $('.brand-emt').on('click', function() {
+        // Function to handle the click on brand-emt
+        $('.brand-emt').on('click', function () {
             // Remove the active class from all brand-emt
             $('.brand-emt.active').removeClass('active');
             // Add the active class to the clicked brand-emt
             $(this).addClass('active');
         });
-        
 
-         // Function to handle the click on brand-emt then get their on products
+
+        // Function to handle the click on brand-emt then get their on products
         $('.brand-emt').on('click', function () {
             const brandName = $(this).data('brand');
             const category_id = $('#category_id').val();
@@ -149,7 +150,7 @@
             $.ajax({
                 type: 'POST',
                 url: "{% url 'customer:getBrand' %}",
-                data: { brand: brandName, categoryId :category_id},
+                data: { brand: brandName, categoryId: category_id },
 
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("X-CSRFToken", csrfToken); // Include CSRF token in the request headers

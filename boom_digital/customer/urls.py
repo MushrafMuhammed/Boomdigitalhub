@@ -6,6 +6,8 @@ app_name = 'customer'
 
 urlpatterns = [
     # path('', views.null_search_redirect),
+    path('customer_registration', views.newCustomerfun, name='newCustomer'),
+    path('login', views.loginfun, name='login'),
     path('home', views.homefun, name='home'),
     path('offers', views.offersfun, name='offers'),
     path('offers_hover', views.offers_hoverfun, name='offers_hover'),
@@ -16,5 +18,18 @@ urlpatterns = [
     path('desktops', views.desktopfun, name='desktop'),
     path('tablets', views.tabletfun, name='tablet'),
     path('accessories', views.accessoriesfun, name='accessories'),
+    path('productDetails/<int:product_id>',views.productDetailsfun, name='productDetails'),
+    path('cartItems', views.cartItemsfun, name='cartItems'),
+    path('cart/<int:product_id>', views.cartfun, name='cart'),
+    path('delCart/<int:cart_id>', views.delCart, name='delCart'),
+    path('update_itemTotal', views.update_itemTotalfun, name='update_itemTotal'),
+    path('checkout', views.checkoutfun, name='checkout'),
+    path('success_page', views.success_pagefun, name='success_page'),
+    path('product_not_found', views.product_not_foundfun, name='product_not_found'),
+
+
+
+
+
 
 ]

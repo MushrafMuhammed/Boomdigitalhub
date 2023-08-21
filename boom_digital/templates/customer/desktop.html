@@ -1,5 +1,7 @@
 {% extends 'customer/layout.html' %}
-
+{% block title %}
+    <title>Boom digital | Desktop</title>
+    {% endblock %}
 {% block style %}
 <style>
     .emt:hover {
@@ -102,7 +104,11 @@
 
                             <div class="card-body">
                                 <h5 class="card-title"><b>{{ desktop.name }}</b></h5>
-                                <h5 class="card-text text-dark">Offer Price: ₹ {{ desktop.offer_price }}</h5>
+                                {% if desktop.offer_price %}
+                                <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{desktop.offer_price }}</h5>
+                                {% else %}
+                                <h5 class="card-text text-dark"><strike style="color: brown;">Offer</strike></h5>
+                                {% endif %}
                                 <p>Price: {{ desktop.price }}</p>
                             </div>
                         </div>

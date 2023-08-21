@@ -1,7 +1,9 @@
 from django.http import JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
+from django.views.decorators.http import require_POST
 
-from administrator.models import Admin_users, Brand, Category, Employee
+from administrator.models import Admin_users, Brand, Category, Customer, Employee
+from staff.models import Product
 
 # Create your views here. 
 
@@ -24,8 +26,13 @@ def loginfun(request) :
     return render(request, 'administrator/login.html', {'errorMessage' : msg })
 
 def dashboardfun(request):
-
-    return render(request, 'administrator/dashboard.html')
+    productList = Product.objects.all()
+    proCount = productList.count()
+    customerList = Customer.objects.all()
+    cusCount = customerList.count()
+    employees = Employee.objects.all()
+    empCount = employees.count()
+    return render(request, 'administrator/dashboard.html',{'productCount':proCount,'customerCount':cusCount,'employeeCount':empCount})
 
    
 def newCategoryfun(request):
@@ -60,23 +67,15 @@ def viewCategoryfun(request,Category_id):
     editItem = Category.objects.get(
         id = Category_id,
     )
+    if request.method == "POST":
+        editItem.name = request.POST.get('category_name')
+        editItem.description = request.POST.get('description')
+
+    if 'logo' in request.FILES:
+        editItem.logo = request.FILES.get('logo')
+    editItem.save()
     return render(request, 'administrator/viewCategory.html',{'item':editItem})
 
-def editCategoryfun(request):
-    msg = ""
-    category = Category.objects.get(id=request.POST['request_id'])
-
-    if request.method == 'POST':
-        category.name = request.POST['name']
-        category.description = request.POST['description']
-
-        if 'logo' in request.FILES:
-            category.logo =  request.FILES['logo']
-
-        category.save()
-        return JsonResponse({'status': 'success'})
-    else:
-        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
 def newBrandfun(request):
     categories = Category.objects.all()
@@ -183,10 +182,18 @@ def employeeDetailsfun(request,employee_id):
     return render(request, 'administrator/employeeDetails.html',{'editemployee':editemployee})
 
 def customerfun(request):
-    return render(request, 'administrator/customerList.html')
+    customerList = Customer.objects.all()
+    count = customerList.count()
+    return render(request, 'administrator/customerList.html',{'customers':customerList,'customerCount':count})
 
 def stockfun(request):
-    return render(request, 'administrator/stockDetails.html')
+    productList = Product.objects.all()
+    productCount = productList.count()
+
+    # Calculate total current_stock
+    total_current_stock = sum(product.current_stock for product in productList)
+    return render(request, 'administrator/stockDetails.html',{'products':productList,'count':productCount, 'total_stock':total_current_stock})
+
 
 def notFoundfun(request):
     return render(request, 'administrator/notFound.html')

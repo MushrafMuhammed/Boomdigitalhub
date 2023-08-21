@@ -1,5 +1,7 @@
 {% extends 'administrator/layout.html' %}
-
+{% block title %}
+    <title>Admin | Stock Details</title>
+{% endblock %}
 {% block style %}
 <style>
     .btn-main-2 {
@@ -31,8 +33,8 @@
                     <div>
                         <h5><b>Stock Details</b></h5>
                     </div>
-                    <div class=" px-5">Total Number of Products - </div>
-                    <div class=" px-5">Current Stock - </div>
+                    <div class=" px-5">Total Number of Products - <strong>{{count}}</strong></div>
+                    <div class=" px-5">Current Stock - <strong>{{total_stock}}</strong></div>
                 </div>
             </div>
         </div>
@@ -51,7 +53,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+                    {% for product in products%}
                     <tr>
                         <td>
                             <a href="">
@@ -72,25 +74,25 @@
                                   </svg></a>
             
                         </td>
-                        <td><input type="text" class="form-control" id="name"
-                                value="" readonly></td>
-                        <td><input type="text" class="form-control" id="price"
-                                value="$  " readonly></td>
+                        <td>
+                            <input type="text" class="form-control" id="name"
+                                value="{{product.name}}" readonly>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="price"
+                                        value="$ {{product.price}} " readonly>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="offer_price"
+                                value="$ {{product.offer_price}} " readonly>
+                        </td>
                         <td>
                             <input class="form-control" type="number"
                                 data-item="" class="quantity"
-                                value="" min="1"
-                                max="">
+                                value="{{product.current_stock}}" readonly>
                         </td>
-            
-            
-                        <td><input type="text" class="form-control item_subtotal"
-                                data-item="" value=""
-                                style="width: 60px;"></td>
                     </tr>
-                    
-            
-            
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

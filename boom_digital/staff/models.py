@@ -1,6 +1,6 @@
 from django.db import models
 
-from administrator.models import Brand, Category
+from administrator.models import Category, Brand
 
 # Create your models here.
 
@@ -17,4 +17,7 @@ class Product(models.Model):
     class Meta:
         db_table = 'product'
 
+
+
+    
 

@@ -1,5 +1,7 @@
 {% extends 'customer/layout.html' %}
-
+{% block title %}
+    <title>Boom digital | Tablets</title>
+    {% endblock %}
 {% block style %}
 <style>
     .emt:hover {
@@ -98,7 +100,11 @@
 
                             <div class="card-body">
                                 <h5 class="card-title"><b>{{ tablet.name }}</b></h5>
-                                <h5 class="card-text text-dark">Offer Price: ₹ {{ tablet.offer_price }}</h5>
+                                {% if tablet.offer_price %}
+                                <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{tablet.offer_price }}</h5>
+                                {% else %}
+                                <h5 class="card-text text-dark"><strike style="color: brown;">Offer</strike></h5>
+                                {% endif %}
                                 <p>Price: {{ tablet.price }}</p>
                             </div>
                         </div>
@@ -165,6 +171,7 @@
                         for (var i = 0; i < items.length; i++) {
                             var tablet = items[i];
                             var cardHtml = `
+                            
                             <div class="col mb-4">
                                 <div class="card custom-card text-dark bg-opacity-10 h-100">
                                     <div class="d-flex justify-content-center align-items-center" style="height: 250px;">

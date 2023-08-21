@@ -37,13 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',   
+    'django.contrib.staticfiles',  
+    'wkhtmltopdf', 
     
     #Local
     'common',
     'administrator',
     'staff',
     'customer',
+    
 ]
 
 MIDDLEWARE = [
@@ -96,6 +98,9 @@ DATABASES = {
         'PORT': '5432'
     }
 }
+
+RAZOPAY_KEY_ID= "rzp_test_LobQFmdaxz5yzX"	
+RAZOPAY_KEY_SECRET=	"Qm8dnnK5z1uZL365lzt1WbvR"
 
 
 # Password validation

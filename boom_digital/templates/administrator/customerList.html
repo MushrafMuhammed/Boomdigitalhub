@@ -1,5 +1,7 @@
 {% extends 'administrator/layout.html' %}
-
+{% block title %}
+    <title>Admin | Customers</title>
+    {% endblock %}
 {% block style %}
 <style>
     .btn-main-2 {
@@ -31,7 +33,7 @@
                     <div>
                         <h5><b>Customer List</b></h5>
                     </div>
-                    <div class=" px-5">Total Number of Customers - </div>
+                    <div class=" px-5">Total Number of Customers - <strong>{{customerCount}}</strong></div>
                 </div>
             </div>
         </div>
@@ -42,34 +44,28 @@
                 <thead class="bg-dark">
                     <tr class="th_row text-light">
                         <th class="font-13 border-0 min-150">Name</th>
-                        <th class="font-13 border-0 min-150">Address</th>
                         <th class="font-13 border-0 min-150">
                             Number
                         </th>
                         <th class="font-13 border-0 min-100">Email</th>
-                        <!-- <th class="font-13 border-0 min-150">
-                            Status
-                        </th> -->
                     </tr>
                 </thead>
                 <tbody class="tr_hover">
                     <!-- customerList -->
+                    {% for customer in customers %}
                     <tr>
-
                         <td class="font-13 text-black-50 pointer">
+                            {{customer.name}}
                         </td>
                         <td class="font-13 text-black-50 pointer">
-                            <a style="  color: inherit;" href="">
-                            </a>
+                            {{customer.phone}}
                         </td>
                         <td class="font-13 text-black-50 pointer">
-                        </td>
-                        <td class="font-13 text-black-50 pointer">
-
+                            {{customer.email}}
                         </td>
 
                     </tr>
-                    <!-- /ko -->
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

@@ -23,13 +23,11 @@ urlpatterns = [
     path('cart/<int:product_id>', views.cartfun, name='cart'),
     path('delCart/<int:cart_id>', views.delCart, name='delCart'),
     path('update_itemTotal', views.update_itemTotalfun, name='update_itemTotal'),
+    path('addressDetails', views.address_detailsfun, name='address-details'),
     path('checkout', views.checkoutfun, name='checkout'),
+    path('order_product', views.order_productfun, name='order_product'),
+    path('callback/<int:a_id>', views.callbackfun, name='callback'),
     path('success_page', views.success_pagefun, name='success_page'),
     path('product_not_found', views.product_not_foundfun, name='product_not_found'),
-
-
-
-
-
 
 ]

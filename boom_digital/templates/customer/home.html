@@ -36,7 +36,11 @@
 
             <div class="card-body">
               <h5 class="card-title"><b>{{ product.name }}</b></h5>
-              <h5 class="card-text text-dark">Offer Price: ₹ {{ product.offer_price }}</h5>
+              {% if product.offer_price %}
+              <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{ product.offer_price }}</h5>
+              {% else %}
+              <h5 class="card-text text-dark"><strike style="color: brown;">Offer</strike></h5>
+              {% endif %}
               <p>Price: {{ product.price }}</p>
 
             </div>
@@ -73,7 +77,11 @@
 
             <div class="card-body">
               <h5 class="card-title"><b>{{ laptop.name }}</b></h5>
-              <h5 class="card-text text-dark">Offer Price: ₹ {{ laptop.offer_price }}</h5>
+              {% if laptop.offer_price %}
+              <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{ product.offer_price }}</h5>
+              {% else %}
+              <h5 class="card-text text-dark"><strike style="color: brown;">Offer</strike></h5>
+              {% endif %}
               <p>Price: {{ laptop.price }}</p>
             </div>
           </div>
@@ -110,7 +118,11 @@
 
             <div class="card-body">
               <h5 class="card-title"><b>{{ desktop.name }}</b></h5>
-              <h5 class="card-text text-dark">Offer Price: ₹ {{ desktop.offer_price }}</h5>
+              {% if desktop.offer_price %}
+              <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{ desktop.offer_price }}</h5>
+              {% else %}
+              <h5 class="card-text text-dark"><strike style="color: brown;">Offer</strike></h5>
+              {% endif %}
               <p>Price: {{ desktop.price }}</p>
             </div>
           </div>
@@ -146,7 +158,11 @@
 
             <div class="card-body">
               <h5 class="card-title"><b>{{ mobile.name }}</b></h5>
-              <h5 class="card-text text-dark">Offer Price: ₹ {{ mobile.offer_price }}</h5>
+              {% if mobile.offer_price %}
+              <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{ mobile.offer_price }}</h5>
+              {% else %}
+              <h5 class="card-text text-dark"><strike style="color: brown;">Offer</strike></h5>
+              {% endif %}
               <p>Price: {{ mobile.price }}</p>
             </div>
           </div>
@@ -182,7 +198,11 @@
 
             <div class="card-body">
               <h5 class="card-title"><b>{{ tablet.name }}</b></h5>
-              <h5 class="card-text text-dark">Offer Price: ₹ {{ tablet.offer_price }}</h5>
+              {% if tablet.offer_price %}
+              <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{ tablet.offer_price }}</h5>
+              {% else %}
+              <h5 class="card-text text-dark"><strike style="color: brown;">Offer</strike></h5>
+              {% endif %}
               <p>Price: {{ tablet.price }}</p>
             </div>
           </div>
@@ -218,7 +238,11 @@
 
             <div class="card-body">
               <h5 class="card-title"><b>{{ accessory.name }}</b></h5>
-              <h5 class="card-text text-dark">Offer Price: ₹ {{ accessory.offer_price }}</h5>
+              {% if accessory.offer_price %}
+              <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{ accessory.offer_price }}</h5>
+              {% else %}
+              <h5 class="card-text text-dark"><strike style="color: brown;">Offer</strike></h5>
+              {% endif %}
               <p>Price: {{ accessory.price }}</p>
             </div>
           </div>
@@ -228,5 +252,11 @@
     </div>
   </div>
 </section>
+
+<script>
+  {% if request.GET.message %}
+  alert("{{ request.GET.message|safe }}");
+  {% endif %}
+</script>
 
 {% endblock %}

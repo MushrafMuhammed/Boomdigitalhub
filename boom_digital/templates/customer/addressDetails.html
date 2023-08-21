@@ -1,0 +1,107 @@
+{% extends 'customer/layout.html' %}
+{% load static %}
+{% block title %}
+<title>Boom digital | Address Details</title>
+{% endblock %}
+{% block style %}
+
+{%endblock%}
+
+{%block carousel%}
+{% endblock %}
+
+{% block content %}
+<section class="bg-light pt-3" id="card-section">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12 me-3">
+                <div class="row p-1">
+                    <div class="bg-primary pt-4 pb-3 text-center card">
+                        <h5 class="text-light h5t-3 pb-2">
+                            ADDRESS DETAILS <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red"
+                                class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                            </svg>
+                            PATMENT
+                        </h5>
+                    </div>
+                </div>
+                <div class="row p-1">
+                    <div class="card mt-3 p-4">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div>
+                                <h5 class="pt-3 pb-2"><b>Billing Details</b></h5>
+                            </div>
+                            <div class="row pb-2">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input type="text" class="form-control" name="customer_name" placeholder=""
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Phone</label>
+                                        <input type="number" class="form-control" name="phone" placeholder="+91"
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pb-2">
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <textarea name="address" class="form-control" rows="5" required></textarea>
+                                </div>
+                            </div>
+                            <div class="row pb-2">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Place</label>
+                                        <input type="text" class="form-control" name="place" placeholder="" required>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Postcode / ZIP</label>
+                                        <input type="number" class="form-control" name="pincode" placeholder=""
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pb-2">
+
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" class="form-control" name="email" placeholder="" required>
+                                </div>
+                            </div>
+
+                            <div class="row pb-3">
+                                <div class="col" style="text-align: right;">
+                                    <button type="submit" id="rzp-button" class="btn btn-dark" >Continue
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white"
+                                            class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            
+
+        </div>
+</section>
+
+
+
+{% endblock %}

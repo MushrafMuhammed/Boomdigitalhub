@@ -1,5 +1,8 @@
 {% extends 'customer/layout.html' %}
 {% load static %}
+{% block title %}
+    <title>Boom digital | CartItems</title>
+    {% endblock %}
 {% block style %}
 {%endblock%}
 
@@ -20,7 +23,7 @@
                                 <path fill-rule="evenodd"
                                     d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
                             </svg>
-                            PLACE ORDER <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red"
+                            ADDRESS DETAILS <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red"
                                 class="bi bi-arrow-right" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
                                     d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
@@ -65,11 +68,10 @@
                                                 value="$  {{cartProduct.product_details.price}}" readonly>
                                         </td>
                                         <td>
-                                            <input class="form-control quantity" type="number" 
+                                            <input class="form-control quantity" type="number"
                                                 data-item="{{cartProduct.product_details.id}}"
                                                 value="{{cartProduct.quantity}}" min="1"
-                                                max="{{cartProduct.product_details.current_stock}}"
-                                                >
+                                                max="{{cartProduct.product_details.current_stock}}">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control item_subtotal"
@@ -91,7 +93,7 @@
                             </div>
 
                             <div class="row justify-content-center text-center mt-4">
-                                <a class="btn btn-dark" style="width: 50%;" href="{% url 'customer:checkout' %}">Proceed
+                                <a class="btn btn-dark" style="width: 50%;" href="{% url 'customer:address-details' %}">Proceed
                                     to Checkout</a>
                             </div>
 
@@ -124,13 +126,13 @@
         // Quantity and price change
         $('.quantity').change(function () {
             productId = $(this).attr('data-item'),
-            quantity = $(this).val()
+                quantity = $(this).val()
             $.ajax({
                 url: "{% url 'customer:update_itemTotal' %}",
                 data: {
-                    product_id : productId,
-                    quantity : quantity
-                    
+                    product_id: productId,
+                    quantity: quantity
+
                 },
                 method: 'POST',
 
@@ -148,11 +150,14 @@
         });
     });
 
+
+    {% if alertmessage %}
+    alert("{{alertmessage}}")
+    {% endif %}
+
     {% if cart_msg %}
-    <script>
-        cart_msg = request.
-        alert("{{ cart_msg }}");
+    alert("{{ cart_msg }}");
+    {% endif %}
 </script>
-{% endif %}
-</script>
+
 {% endblock %}

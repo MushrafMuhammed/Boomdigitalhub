@@ -64,8 +64,13 @@
                                                 class="img-fluid" style="width: 105px; height: 100px;">
                                         </td>
                                         <td>
+                                            {% if cartProduct.product_details.offer_price %}
                                             <input type="text" class="form-control" id="price"
-                                                value="$  {{cartProduct.product_details.price}}" readonly>
+                                                value="$ {{cartProduct.product_details.offer_price}} " readonly>
+                                            {% else %}
+                                            <input type="text" class="form-control" id="price"
+                                                value="$ {{cartProduct.product_details.price}} " readonly>
+                                            {% endif %}
                                         </td>
                                         <td>
                                             <input class="form-control quantity" type="number"
@@ -74,9 +79,15 @@
                                                 max="{{cartProduct.product_details.current_stock}}">
                                         </td>
                                         <td>
+                                            {% if cartProduct.product_details.offer_price %}
                                             <input type="text" class="form-control item_subtotal"
                                                 data-item="{{ cartProduct.product_details.id }}"
-                                                value="{{ cartProduct.product_details.price }}" readonly>
+                                                value= "{{ cartProduct.product_details.offer_price }}" readonly>
+                                            {% else %}
+                                            <input type="text" class="form-control" id="price"
+                                                value="$ {{cartProduct.product_details.price}} " readonly>
+                                            {% endif %}
+                                            
                                         </td>
                                     </tr>
                                     {%endfor%}

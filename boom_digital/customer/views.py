@@ -61,18 +61,7 @@ def homefun(request):
     mobile_list = Product.objects.filter(category__name="Mobiles")
     tablet_list = Product.objects.filter(category__name="Tablets")
     accessories_list = Product.objects.filter(category__name="Accessories")
-    return render(
-        request,
-        "customer/home.html",
-        {
-            "products": productList,
-            "laptops": laptop_list,
-            "desktops": desktop_list,
-            "accessories": accessories_list,
-            "mobiles": mobile_list,
-            "tablets": tablet_list,
-        },
-    )
+    return render(request, "customer/home.html", {"products": productList,"laptops": laptop_list,"desktops": desktop_list,"accessories": accessories_list,"mobiles": mobile_list,"tablets": tablet_list})
 
 
 def offers_hoverfun(request):
@@ -267,7 +256,7 @@ def update_itemTotalfun(request):
     # Retrieve the product object and its price
     try:
         product = Product.objects.get(id=product_id)
-        price = product.price
+        price = product.offer_price if product.offer_price else product.price
         # print(product,price)
     except Product.DoesNotExist:
         return JsonResponse({"error": "Product not found."}, status=404)

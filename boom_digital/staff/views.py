@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render
 
 from administrator.models import Brand, Category, Employee
+from customer.models import Order, OrderItem
 from staff.models import Product
 
 # from staff.models import Product, Seller
@@ -35,10 +36,12 @@ def logoutfun(request):
 def dashboardfun(request):
     productList = Product.objects.all()
     productCount = productList.count()
+    orderList= Order.objects.all()
+    orderCount = orderList.count()
     
     # Calculate total current_stock
     total_current_stock = sum(product.current_stock for product in productList)
-    return render(request, "employee/dashboard.html",{'count':productCount, 'total_stock':total_current_stock})
+    return render(request, "employee/dashboard.html",{'count':productCount, 'total_stock':total_current_stock,'orderCount':orderCount})
 
 
 def profilefun(request):
@@ -128,7 +131,11 @@ def productDetailsfun(request,product_id):
 
 
 def orderfun(request):
-    return render(request, "employee/orders.html")
+    orderList= Order.objects.all()
+    count = orderList.count()
+    # Access order and related items
+    itemsWithOrders = OrderItem.objects.all().select_related('order')
+    return render(request, 'employee/orders.html',{'orderCount':count,'orderItems':itemsWithOrders})
 
 
 def stockDetailsfun(request):
@@ -137,4 +144,4 @@ def stockDetailsfun(request):
 
     # Calculate total current_stock
     total_current_stock = sum(product.current_stock for product in productList)
-    return render(request, "employee/stockDetails.html",{'products':productList,'count':productCount, 'total_stock':total_current_stock})
+    return render(request, 'employee/stockDetails.html',{'products':productList,'count':productCount, 'total_stock':total_current_stock})

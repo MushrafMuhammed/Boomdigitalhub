@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.views.decorators.http import require_POST
 
 from administrator.models import Admin_users, Brand, Category, Customer, Employee
+from customer.models import Order
 from staff.models import Product
 
 # Create your views here. 
@@ -32,7 +33,9 @@ def dashboardfun(request):
     cusCount = customerList.count()
     employees = Employee.objects.all()
     empCount = employees.count()
-    return render(request, 'administrator/dashboard.html',{'productCount':proCount,'customerCount':cusCount,'employeeCount':empCount})
+    orderList= Order.objects.all()
+    orderCount = orderList.count()
+    return render(request, 'administrator/dashboard.html',{'productCount':proCount,'customerCount':cusCount,'employeeCount':empCount,'orderCount':orderCount})
 
    
 def newCategoryfun(request):
@@ -115,48 +118,35 @@ def viewBrandfun(request,brand_id):
     categories = Category.objects.exclude(
         id = editItem.category_id
     )#for exclude the default brand's category
+
+    if request.method == "POST":
+        editItem.name = request.POST.get('name')
+        editItem.description = request.POST.get('description')
+
+        category_id = request.POST.get('category')
+        category_instance = Category.objects.get(id=category_id)
+        editItem.category = category_instance
+
+
+    if 'logo' in request.FILES:
+        editItem.logo = request.FILES.get('logo')
+    editItem.save()
     return render(request, 'administrator/viewBrand.html',{'item':editItem, 'categories':categories})
 
-def editBrandfun(request):
-
-    if request.method == 'POST':
-        brand = Brand.objects.get(id=request.POST['request_id'])
-        brand.name = request.POST['name']
-        brand.description = request.POST['description']
-        brand.category = request.POST['category']
-
-
-        if 'logo' in request.FILES:
-            brand.logo = request.FILES['logo']
-
-        brand.save()
-        return JsonResponse({'status': 'success'})
-    else:
-        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
 def newEmployeefun(request):
     msg = ""
     if request.method == 'POST':
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        employee_email = request.POST['email']
-        employee_number = request.POST['number']
-        employee_gender = request.POST['gender']
-        employee_position = request.POST['position']
-        hired_date = request.POST['hired_date']
-        employee_qualification = request.POST['qualification']
-        employee_profile = request.FILES['profile_img']
-
         newEmoloyee = Employee (
-            first_name = first_name,
-            second_name = last_name,
-            email = employee_email,
-            phone = employee_number,
-            gender = employee_gender,
-            position = employee_position,
-            hired_date = hired_date,
-            qualification = employee_qualification,
-            profile_img = employee_profile,
+            first_name = request.POST.get('first_name'),
+            second_name = request.POST.get('last_name'),
+            email = request.POST.get('email'),
+            phone = request.POST.get('number'),
+            gender = request.POST.get('gender'),
+            position = request.POST.get('position'),
+            hired_date = request.POST.get('hired_date'),
+            qualification = request.POST.get('qualification'),
+            profile_img = request.FILES.get('profile_img'),
         )
         newEmoloyee.save()
         msg = "Registration completed" 
@@ -179,6 +169,19 @@ def employeeDetailsfun(request,employee_id):
     editemployee = Employee.objects.get(
         id = employee_id,
     )
+
+    if request.method == "POST":
+        editemployee.first_name = request.POST.get('first_name')
+        editemployee.second_name = request.POST.get('last_name')
+        editemployee.email = request.POST.get('email')
+        editemployee.phone = request.POST.get('number')
+        editemployee.gender = request.POST.get('gender')
+        editemployee.position = request.POST.get('position')
+        editemployee.qualification = request.POST.get('qualification')
+    if 'profile_img' in request.FILES:
+        editemployee.profile_img = request.FILES.get('profile_img')    
+    editemployee.save()
+
     return render(request, 'administrator/employeeDetails.html',{'editemployee':editemployee})
 
 def customerfun(request):

@@ -1,0 +1,35 @@
+{% extends 'customer/layout.html' %}
+{% load static %}
+{% block title %}
+<title>Boom digital | Profile</title>
+{% endblock %}
+{% block style %}
+
+{%endblock%}
+
+{%block carousel%}
+{% endblock %}
+
+{% block content %}
+<section class="" id="product-section">
+    <div class="container">
+        <h3 style="margin-top: 20px;">| Profile</h3>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th scope="row">Name</th>
+                    <td>{{ customer.name}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Email</th>
+                    <td>{{ customer.email}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Phone No</th>
+                    <td>{{ customer.phone}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+    {% endblock %}

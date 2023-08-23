@@ -1,9 +1,17 @@
 {% extends 'customer/layout.html' %}
 {% block title %}
-    <title>Boom digital | Laptops</title>
-    {% endblock %}
+<title>Boom digital | Laptops</title>
+{% endblock %}
 {% block style %}
 <style>
+    @media (max-width: 1000px) {
+
+        /* Hide the carousel component */
+        #carousel {
+            display: none;
+        }
+    }
+
     .emt:hover {
         border-bottom: 4px solid #e12454;
         font-weight: bold;
@@ -19,9 +27,9 @@
 
     .custom-card:hover {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        /* Example box shadow for the hover effect */
+        /*  box shadow for the hover effect */
         transform: scale(1.05);
-        /* Example scaling effect on hover */
+        /*  scaling effect on hover */
     }
 
     .brand-emt.active {
@@ -33,7 +41,7 @@
 {% endblock %}
 {%block carousel%}
 <section id="">
-    <div id="carouselExample" class="carousel slide">
+    <div id="carousel" class="carousel slide">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img style="height: 410px;"
@@ -51,11 +59,11 @@
                     class="d-block w-100" alt="...">
             </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
@@ -104,7 +112,8 @@
                             <div class="card-body">
                                 <h5 class="card-title"><b>{{ laptop.name }}</b></h5>
                                 {% if laptop.offer_price %}
-                                <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{laptop.offer_price }}</h5>
+                                <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹
+                                    {{laptop.offer_price }}</h5>
                                 {% else %}
                                 <h5 class="card-text text-dark"><strike style="color: brown;">Offer</strike></h5>
                                 {% endif %}
@@ -184,7 +193,6 @@
                                         <h5 class="card-title"><b>${laptop.name}</b></h5>
                                         <h5 class="card-text text-dark">Offer Price: ₹ ${laptop.offer_price}</h5>
                                         <p>Price: ${laptop.price}</p>
-                                        <a href="" class="btn btn-dark items-center mt-2" style="width: 100%;">Buy Now</a>
                                     </div>
                                 </div>
                             </div>

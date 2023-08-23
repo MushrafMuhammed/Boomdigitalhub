@@ -1,9 +1,17 @@
 {% extends 'customer/layout.html' %}
 {% block title %}
-    <title>Boom digital | Tablets</title>
-    {% endblock %}
+<title>Boom digital | Tablets</title>
+{% endblock %}
 {% block style %}
 <style>
+    @media (max-width: 1000px) {
+
+        /* Hide the carousel component */
+        #carousel {
+            display: none;
+        }
+    }
+
     .emt:hover {
         border-bottom: 4px solid #e12454;
         font-weight: bold;
@@ -33,24 +41,25 @@
 {% endblock %}
 {%block carousel%}
 <section id="">
-    <div id="carouselExample" class="carousel slide">
+    <div id="carousel" class="carousel slide">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img style="height: 410px;"
-                    src="https://venturebeat.com/product-comparisons?wp-content=uploads/2021/06/header_Samsung-Tablet_desktop.jpg"
+                    src="https://crops.giga.de/f1/08/af/90d6197cafc58ee76815ed67fb_YyAxODA1eDk0Mys1OCs2OAJyZSAxMjAwIDYyNwNmODk2N2Y4NzFkZg==.jpg"
                     class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
                 <img style="height: 410px;"
-                    src="https://fscl01.fonpit.de/userfiles/7734655/image/Lenovo-Tab-Extreme-Android-Tablet-Launch-Price-Specs-Release-US-w1400h788.jpg"
+                    src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcREaOy6pxuxqhgU-upxynFj7v9pEVZ1uO0s4jDCe-sdTDVOVhob"
                     class="d-block w-100" alt="...">
+
             </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
@@ -101,7 +110,8 @@
                             <div class="card-body">
                                 <h5 class="card-title"><b>{{ tablet.name }}</b></h5>
                                 {% if tablet.offer_price %}
-                                <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{tablet.offer_price }}</h5>
+                                <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹
+                                    {{tablet.offer_price }}</h5>
                                 {% else %}
                                 <h5 class="card-text text-dark"><strike style="color: brown;">Offer</strike></h5>
                                 {% endif %}
@@ -116,6 +126,7 @@
 
             <div id="brand_emt" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5"
                 style="display: hide;">
+                
             </div>
         </div>
     </div>
@@ -171,20 +182,19 @@
                         for (var i = 0; i < items.length; i++) {
                             var tablet = items[i];
                             var cardHtml = `
-                            
-                            <div class="col mb-4">
-                                <div class="card custom-card text-dark bg-opacity-10 h-100">
-                                    <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
-                                        <img class="card-img-top rounded-circle p-3" src="${tablet.image}" alt="" style="height: 100%; width: 100%; object-fit: contain;">
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title"><b>${tablet.name}</b></h5>
-                                        <h5 class="card-text text-dark">Offer Price: ₹ ${tablet.offer_price}</h5>
-                                        <p>Price: ${tablet.price}</p>
-                                        <a href="" class="btn btn-dark items-center mt-2" style="width: 100%;">Buy Now</a>
+                                <div class="col mb-4">
+                                    <div class="card custom-card text-dark bg-opacity-10 h-100">
+                                        <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
+                                            <img class="card-img-top rounded-circle p-3" src="${tablet.image}" alt="" style="height: 100%; width: 100%; object-fit: contain;">
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title"><b>${tablet.name}</b></h5>
+                                            <h5 class="card-text text-dark">Offer Price: ₹ ${tablet.offer_price}</h5>
+                                            <p>Price: ${tablet.price}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            
                             `;
                             brandEmt.append(cardHtml); // Append the dynamically created card element
                         }

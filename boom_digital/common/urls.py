@@ -5,7 +5,6 @@ from . import views
 app_name = 'common'
 
 urlpatterns = [
-    # path('', views.null_search_redirect),
     path('home', views.homefun, name='home'),
     path('offers', views.offersfun, name='offers' ),
     path('offers_hover', views.offers_hoverfun, name='offers_hover' ),

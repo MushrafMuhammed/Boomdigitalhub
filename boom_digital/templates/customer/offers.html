@@ -1,9 +1,17 @@
 {% extends 'customer/layout.html' %}
 {% block title %}
-    <title>Boom digital | Best Offers</title>
-    {% endblock %}
+<title>Boom digital | Best Offers</title>
+{% endblock %}
 {% block style %}
 <style>
+    @media (max-width: 1000px) {
+
+        /* Hide the carousel component */
+        #carousel {
+            display: none;
+        }
+    }
+
     .emt:hover {
         border-bottom: 4px solid #e12454;
         font-weight: bold;
@@ -33,7 +41,7 @@
 {% endblock %}
 {%block carousel%}
 <section id="">
-    <div id="carouselExample" class="carousel slide">
+    <div id="carousel" class="carousel slide">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img style="height: 410px;"
@@ -41,11 +49,11 @@
                     class="d-block w-100" alt="...">
             </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>

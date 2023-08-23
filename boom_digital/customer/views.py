@@ -53,6 +53,11 @@ def loginfun(request):
             msg = "invalid password or username"
     return render(request, "customer/login.html", {"error_message": msg})
 
+def profilefun(request):
+    customerId = request.session["customer_sessionId"]
+    customer = Customer.objects.get(id = customerId)
+
+    return render(request, 'customer/profile.html',{'customer':customer})
 
 def homefun(request):
     productList = Product.objects.all()
@@ -432,6 +437,8 @@ def callbackfun(request, a_id):
             order_item.save()
 
         order_details.save()
+        
+        
         orderedProducts = OrderItem.objects.filter(order_id = order_details)
         print(orderedProducts)
 
@@ -452,6 +459,11 @@ def callbackfun(request, a_id):
             "shipping_fee": shipping_fee,
             "grand_total": grand_total, },
     )
+
+def logoutfun(request):
+    del request.session["customer_sessionId"]
+    request.session.flush()
+    return redirect("customer:home")  # Redirect to the common home page after logout
 
 def success_pagefun(request):
     return render(request, "customer/success_page.html")

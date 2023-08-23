@@ -8,6 +8,8 @@ urlpatterns = [
     # path('', views.null_search_redirect),
     path('customer_registration', views.newCustomerfun, name='newCustomer'),
     path('login', views.loginfun, name='login'),
+    path('logout', views.logoutfun, name='logout'),
+    path('profile', views.profilefun, name='profile'),
     path('home', views.homefun, name='home'),
     path('offers', views.offersfun, name='offers'),
     path('offers_hover', views.offers_hoverfun, name='offers_hover'),

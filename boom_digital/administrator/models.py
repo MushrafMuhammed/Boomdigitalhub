@@ -31,6 +31,7 @@ class Employee(models.Model):
     first_name = models.CharField(max_length=50,default='')
     second_name = models.CharField(max_length=50,default='')
     email = models.EmailField(default='')
+    password = models.CharField(default='user@123')
     phone = models.CharField(max_length=15,default=0)
     gender = models.CharField(max_length=15)
     position = models.CharField(max_length=100,default='')

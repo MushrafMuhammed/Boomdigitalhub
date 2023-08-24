@@ -21,5 +21,6 @@ urlpatterns = [
     path('employeeDetails/<int:employee_id>',views.employeeDetailsfun, name='employeeDetails'),
     path('customers-list',views.customerfun, name='customer'),   
     path('stock-details',views.stockfun, name='stock'),   
+    path('logout',views.logoutfun, name='logout'),
     path('notFound',views.notFoundfun, name='notFound'),   
 ]

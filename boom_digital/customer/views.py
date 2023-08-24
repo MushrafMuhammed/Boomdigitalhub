@@ -1,13 +1,14 @@
 from decimal import Decimal
 from random import randint
 from django.urls import reverse
-from django.http import HttpResponseNotFound, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 import razorpay
 from administrator.models import Brand, Category, Customer
 from boom_digital import settings
 from boom_digital.settings import RAZOPAY_KEY_ID, RAZOPAY_KEY_SECRET
 from django.http import JsonResponse
+from customer.decorators import auth_customer
 from customer.models import Cart, DeliveryAddress, Order, OrderItem
 from django.db.models import Sum
 from django.db.models import F
@@ -53,6 +54,7 @@ def loginfun(request):
             msg = "invalid password or username"
     return render(request, "customer/login.html", {"error_message": msg})
 
+@auth_customer
 def profilefun(request):
     customerId = request.session["customer_sessionId"]
     customer = Customer.objects.get(id = customerId)
@@ -186,7 +188,7 @@ def productDetailsfun(request, product_id):
     product = Product.objects.get(id=product_id)
     return render(request, "customer/product_details.html", {"product": product})
 
-
+@auth_customer
 def cartItemsfun(request):
     customer = request.session["customer_sessionId"]
 
@@ -209,50 +211,56 @@ def cartItemsfun(request):
         },
     )
 
-
 def cartfun(request, product_id):
-    try:
-        product = Product.objects.get(id=product_id)
-    except Product.DoesNotExist:
-        return render(request, "customer/product_not_found.html")
-    product = Product.objects.get(id=product_id)
     if "customer_sessionId" in request.session:
-        product_exist = Cart.objects.filter(
-            product_details=product_id, customer=request.session["customer_sessionId"]
-        ).exists()
 
-        # Use the appropriate price based on offer_price availability
-        if product.offer_price:
-            cart_price = product.offer_price
-        else:
-            cart_price = product.price
+        try:
+            product = Product.objects.get(id=product_id)
 
-        if not product_exist:
-            cart = Cart(
-                customer_id=request.session["customer_sessionId"],
-                product_details_id=product_id,
-                quantity=1,
-                sub_total=cart_price,
-            )
-            cart.save()
-            return cartItemsfun(request)
+            product = Product.objects.get(id=product_id)
+            product_exist = Cart.objects.filter(
+                product_details=product_id, customer=request.session["customer_sessionId"]
+            ).exists()
 
-        else:
-            msg = "Item already in your cart."
-            return redirect(reverse("customer:home") + f"?message={msg}")
+            # Use the appropriate price based on offer_price availability
+            if product.offer_price:
+                cart_price = product.offer_price
+            else:
+                cart_price = product.price
+
+            if not product_exist:
+                cart = Cart(
+                    customer_id=request.session["customer_sessionId"],
+                    product_details_id=product_id,
+                    quantity=1,
+                    sub_total=cart_price,
+                )
+                cart.save()
+                return cartItemsfun(request)
+            else:
+                msg = "Item already in your cart."
+                return redirect(reverse("customer:home") + f"?message={msg}")
+        except Product.DoesNotExist:
+            return render(request, "customer/product_not_found.html")
+            
     else:
         return redirect("customer:login")
+        
 
 
 def delCart(request, cart_id):
-    # cart item to be deleted
-    del_item = Cart.objects.get(
-        id=cart_id, customer=request.session.get("customer_sessionId")
-    )
-    del_item.delete()
-    return redirect("customer:cartItems")
+    if "customer_sessionId" in request.session:
 
+        # cart item to be deleted
+        del_item = Cart.objects.get(
+            id=cart_id, customer=request.session.get("customer_sessionId")
+        )
+        del_item.delete()
+        return redirect("customer:cartItems")
+    else:
+        return redirect("customer:login")
 
+@auth_customer
 def update_itemTotalfun(request):
     # Get new quantity and product_id from the AJAX POST request
     quantity = request.POST["quantity"]
@@ -288,7 +296,7 @@ def update_itemTotalfun(request):
     # Return the updated subtotal as JSON response
     return JsonResponse({"subTotal": sub_total})
 
-
+@auth_customer
 def address_detailsfun(request):
     try:
         customer_id = request.session["customer_sessionId"]
@@ -327,7 +335,7 @@ def address_detailsfun(request):
 
         return render(request, "customer/home.html", {"error_message": msg})
 
-
+@auth_customer
 def checkoutfun(request):
     adrres_id = request.GET.get("aid")
     print(adrres_id)
@@ -355,7 +363,7 @@ def checkoutfun(request):
         },
     )
 
-
+@auth_customer
 def order_productfun(request):
     address_id = int(request.POST["a_id"])
     address = DeliveryAddress.objects.get(id=address_id)

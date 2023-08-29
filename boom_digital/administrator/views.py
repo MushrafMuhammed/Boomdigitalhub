@@ -58,6 +58,15 @@ def newCategoryfun(request):
         msg = "Category added successfully"
     return render(request, 'administrator/categoryReg.html',{'successMessage':msg})
 
+@auth_admin
+def category_existfun(request):
+    if request.method == 'POST':
+        category_name = request.POST.get('category_name')
+        category_exists = Category.objects.filter(name=category_name).exists()
+        return JsonResponse({'exists': category_exists})
+
+    return JsonResponse({'error': 'Invalid request'})
+
 @auth_admin   
 def categoryfun(request):
     categories = Category.objects.all()
@@ -109,6 +118,15 @@ def newBrandfun(request):
         newBrand.save()
         msg = "Brand added successfully"
     return render(request, 'administrator/brandReg.html',{'categories':categories, 'successMessage':msg})
+
+@auth_admin
+def brand_existfun(request):
+    if request.method == 'POST':
+        brandName = request.POST.get('brand_name')
+        brand_exists = Brand.objects.filter(name = brandName).exists()
+        return JsonResponse({'exists': brand_exists})
+
+    return JsonResponse({'error': 'Invalid request'})
 
 @auth_admin
 def brandfun(request):
@@ -195,6 +213,23 @@ def newEmployeefun(request):
         msg = "Registration completed" 
     return render(request, 'administrator/newEmployee.html',{'successMessage':msg})
 
+@auth_admin
+def email_existfun(request):
+    if request.method == 'POST':
+        emailId = request.POST.get('email')
+        email_exists = Employee.objects.filter(email = emailId).exists()
+        return JsonResponse({'exists': email_exists})
+
+    return JsonResponse({'error': 'Invalid request'})
+
+@auth_admin
+def number_existfun(request):
+    if request.method == 'POST':
+        number = request.POST.get('number')
+        number_exists = Employee.objects.filter(phone = number).exists()
+        return JsonResponse({'exists': number_exists})
+
+    return JsonResponse({'error': 'Invalid request'})
 
 def employee_fun(request):
     employees = Employee.objects.all()

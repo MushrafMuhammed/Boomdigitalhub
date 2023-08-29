@@ -1,7 +1,7 @@
 {% extends 'administrator/layout.html' %}
 {% block title %}
-    <title>Admin | Add Category</title>
-    {% endblock %}
+<title>Admin | Add Category</title>
+{% endblock %}
 {% block style %}
 <style>
     .btn-main-2 {
@@ -31,27 +31,28 @@
         <div class="card-body p-md-5 text-black">
             <h3 class="mb-5 text-uppercase"><b>Category Registration</b></h3>
 
-            
+
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row">
 
                     <div class="form-group mb-4">
-                        <label class="form-label" for="form3Example1m">Category name</label>
-                        <input type="text" id="form3Example1m" class="form-control form-control-lg" name="name" />
+                        <label class="form-label" for="category_name">Category name</label>
+                        <input type="text" id="category_name" class="form-control form-control-lg" name="name" required/>
+                        <span id="category_status"></span>
                     </div>
 
                     <div class="form-group mb-4">
                         <label for="inputPassword3" class="col-form-label">Description</label>
                         <div>
-                            <textarea class="form-control" id="descriptionField" placeholder="Write Description" rows="3"
-                                style="margin-bottom: 20px;" name="description"></textarea>
+                            <textarea class="form-control" id="descriptionField" placeholder="Write Description"
+                                rows="3" style="margin-bottom: 20px;" name="description" required></textarea>
                         </div>
                     </div>
 
                     <div class="form-group mb-4">
                         <label class="form-label" for="form3Example8">Logo</label>
-                        <input type="file" class="form-control" name="logo" />
+                        <input type="file" class="form-control" name="logo" required/>
                     </div>
                 </div>
 
@@ -65,12 +66,37 @@
         </div>
     </div>
 </div>
-
+{% comment %} ajax_cdn  {% endcomment %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
 <script>
+    $(document).ready(function() {
+        $('#category_name').change(function(){
+        var categoryName = $(this).val();
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRFToken": $('[name=csrfmiddlewaretoken]').val()
+                }
+            })
+            $.ajax({
+                url: "{% url 'admin:category_exist' %}",
+                type: 'POST',
+                data: { category_name: categoryName },
+
+                success: function(response) {
+                    var category_status = $('#category_status'); // Changed to 'category_status'
+                    if (response.exists) {
+                        category_status.html('<span style="color:red;">the category already exist!</span>');
+                    } else {
+                        category_status.html('<span style="color:green;">available !</span>');
+                    }
+                }
+            });
+        });
+    });
+
     {% if successMessage %}
     // Display an alert box with the success message
     alert("{{ successMessage }}");
     {% endif %}
 </script>
-
 {% endblock %}

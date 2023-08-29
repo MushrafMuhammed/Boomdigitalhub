@@ -40,13 +40,13 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-4">
                                     <label class="form-label" for="form3Example1m">First name</label>
-                                    <input type="text" id="form3Example1m" class="form-control form-control-lg" name="first_name" />
+                                    <input type="text" id="form3Example1m" class="form-control form-control-lg" name="first_name" required/>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-4">
                                     <label class="form-label" for="form3Example1m">Last name</label>
-                                    <input type="text" id="form3Example1m" class="form-control form-control-lg" name="last_name" />
+                                    <input type="text" id="form3Example1m" class="form-control form-control-lg" name="last_name" required/>
                                 </div>
                             </div>
                         </div>
@@ -54,12 +54,14 @@
 
                     <div class="form-group mb-4">
                         <label class="form-label" for="form3Example9">Email</label>
-                        <input type="email" class="form-control form-control-lg" name="email">
+                        <input type="email" id="email" class="form-control form-control-lg" name="email" required/>
+                        <span id="email_status"></span>
                     </div>
 
                     <div class="form-group mb-4">
                         <label class="form-label" for="form3Example9">Mobile</label>
-                        <input type="text" class="form-control form-control-lg" minlength="0" name="number" />
+                        <input type="text" id="number" class="form-control form-control-lg" minlength="0" name="number" required/>
+                        <span id="number_status"></span>
                     </div>
 
                     <div class="form-group mb-4">
@@ -96,24 +98,24 @@
 
                     <div class="form-group mb-4">
                         <label class="form-label" for="form3Example9">Position</label>
-                        <input type="text" class="form-control form-control-lg" name="position" />
+                        <input type="text" class="form-control form-control-lg" name="position" required/>
                     </div>
 
                     <div class="form-group mb-4">
                         <label class="form-label" for="form3Example9">joining date </label>
                         <input type="date" class="form-control"
-                        placeholder="dd/mm/yyyy" name="hired_date" />
+                        placeholder="dd/mm/yyyy" name="hired_date" required/>
                     </div>
 
                     <div class="form-group mb-4">
                         <label class="form-label" for="form3Example9">Qualification</label>
-                        <input type="text" class="form-control form-control-lg" name="qualification" />
+                        <input type="text" class="form-control form-control-lg" name="qualification" required/>
                     </div>
 
 
                     <div class="form-group mb-4">
                         <label class="form-label" for="form3Example8">Profile</label>
-                        <input type="file" class="form-control" name="profile_img" />
+                        <input type="file" class="form-control" name="profile_img" required/>
                     </div>
                 </div>
 
@@ -128,7 +130,57 @@
     </div>
 </div>
 
+{% comment %} ajax_cdn  {% endcomment %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>     
 <script>
+    $(document).ready(function() {
+        $('#email').change(function(){
+        var email_field = $(this).val();
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRFToken": $('[name=csrfmiddlewaretoken]').val()
+                }
+            })
+            $.ajax({
+                url: "{% url 'admin:email_exist' %}",
+                type: 'POST',
+                data: { email: email_field },
+
+                success: function(response) {
+                    var email_status = $('#email_status'); // Changed to 'email_status'
+                    if (response.exists) {
+                        email_status.html('<span style="color:red;">the email already exist!</span>');
+                    } else {
+                        email_status.html('<span style="color:green;">available !</span>');
+                    }
+                }
+            });
+        });
+        $('#number').change(function(){
+            var number_field = $(this).val();
+                $.ajaxSetup({
+                    headers: {
+                        "X-CSRFToken": $('[name=csrfmiddlewaretoken]').val()
+                    }
+                })
+                $.ajax({
+                    url: "{% url 'admin:number_exist' %}",
+                    type: 'POST',
+                    data: { number: number_field },
+    
+                    success: function(response) {
+                        var number_status = $('#number_status'); // Changed to 'number_status'
+                        if (response.exists) {
+                            number_status.html('<span style="color:red;">the number already exist!</span>');
+                        } else {
+                            number_status.html('<span style="color:green;">available !</span>');
+                        }
+                    }
+                });
+            });
+    });
+
+
     {% if successMessage %}
     // Display an alert box with the success message
     alert("{{ successMessage }}");

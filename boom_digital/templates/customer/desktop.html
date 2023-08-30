@@ -185,18 +185,21 @@
                         // Iterate over the 'items' array and create the card elements dynamically
                         for (var i = 0; i < items.length; i++) {
                             var desktop = items[i];
+                            var link = "{% url 'customer:productDetails' 0 %}".replace('0', desktop.id);
                             var cardHtml = `
                                 <div class="col mb-4">
-                                    <div class="card custom-card text-dark bg-opacity-10 h-100">
-                                        <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
-                                            <img class="card-img-top rounded-circle p-3" src="${desktop.image}" alt="" style="height: 100%; width: 100%; object-fit: contain;">
+                                   <a href="${link}" class="card-link">
+                                        <div class="card custom-card text-dark bg-opacity-10 h-100">
+                                            <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
+                                                <img class="card-img-top rounded-circle p-3" src="${desktop.image}" alt="" style="height: 100%; width: 100%; object-fit: contain;">
+                                            </div>
+                                            <div class="card-body">
+                                                <h5 class="card-title"><b>${desktop.name}</b></h5>
+                                                <h5 class="card-text text-dark">Offer Price: ₹ ${desktop.offer_price}</h5>
+                                                <p>Price: ${desktop.price}</p>
+                                            </div>
                                         </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title"><b>${desktop.name}</b></h5>
-                                            <h5 class="card-text text-dark">Offer Price: ₹ ${desktop.offer_price}</h5>
-                                            <p>Price: ${desktop.price}</p>
-                                        </div>
-                                    </div>
+                                    </a>
                                 </div>
                             `;
                             brandEmt.append(cardHtml); // Append the dynamically created card element

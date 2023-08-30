@@ -62,14 +62,22 @@ def profilefun(request):
     return render(request, 'customer/profile.html',{'customer':customer})
 
 def homefun(request):
-    productList = Product.objects.all()
-    laptop_list = Product.objects.filter(category__name="Laptops")
-    desktop_list = Product.objects.filter(category__name="Desktops")
-    mobile_list = Product.objects.filter(category__name="Mobiles")
-    tablet_list = Product.objects.filter(category__name="Tablets")
-    accessories_list = Product.objects.filter(category__name="Accessories")
-    return render(request, "customer/home.html", {"products": productList,"laptops": laptop_list,"desktops": desktop_list,"accessories": accessories_list,"mobiles": mobile_list,"tablets": tablet_list})
-
+    search_data = request.GET.get('search_data', '')
+    result_data = []
+    
+    if search_data:
+        result_data = Product.objects.filter(name__icontains=search_data)
+    
+    categories = ['Laptops', 'Desktops', 'Mobiles', 'Tablets', 'Accessories']
+    category_products = {category.lower(): Product.objects.filter(category__name=category) for category in categories}
+    all_products = Product.objects.all()
+    context = {
+        'result_data': result_data,
+        'all_products':all_products,
+        **category_products,
+    }
+    
+    return render(request, 'customer/home.html', context)
 
 def offers_hoverfun(request):
     return render(request, "customer/offers_hover.html")

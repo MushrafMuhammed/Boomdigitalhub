@@ -20,14 +20,82 @@
 </style>
 {% endblock %}
 
+{% block carousel %}
+{% if not result_data %}
+    <section id="">
+        <div id="carousel" class="carousel slide">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img style="height: 590px;"
+                        src="https://digitalbiriyani.com/wp-content/uploads/2022/09/iPhone-14-Mock-Feature-Pruple-2.jpg"
+                        class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img style="height: 590px;"
+                        src="https://i0.wp.com/www.smartprix.com/bytes/wp-content/uploads/2021/10/samsung-galaxy-s22-ultra-water-drop-camera.jpg?fit=1440%2C810&ssl=1"
+                        class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img style="height: 590px;"
+                        src="https://www.cultofmac.com/wp-content/uploads/2020/11/628BCC31-9F0D-4400-AEE1-5A7B1CCA84E5-1536x864.jpeg"
+                        class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+{%endif%}
+{%endblock%}
+
 {% block content %}
+{% if result_data %}
 <section id="product-section">
   <div class="container">
     <h1 class="text-center pt-2">Products</h1>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5">
-      {% for product in products|slice:":10" %}
-      <a href="{% url 'customer:productDetails' product.id %}" style="text-decoration: none;">
-        <div class="col mb-4">
+      
+      {% for data in result_data %}
+      <div class="col mb-4">
+        <a href="{% url 'customer:productDetails' data.id %}" style="text-decoration: none;">
+          <div class="card custom-card text-dark bg-opacity-10 h-100">
+            <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
+              <img class="card-img-top rounded-circle p-3" src="{{ data.image.url }}" class="card-img-top" alt=""
+                style="height: 100%; width: 100%; object-fit: contain;">
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title"><b>{{ data.name }}</b></h5>
+              {% if data.offer_price %}
+              <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{ data.offer_price }}</h5>
+              {% else %}
+              <h5 class="card-text text-dark"><strike style="color: brown;">Offer</strike></h5>
+              {% endif %}
+              <p>Price: {{ data.price }}</p>
+
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% else %}
+<section id="product-section">
+  <div class="container">
+    <h1 class="text-center pt-2">Products</h1>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5">
+      {% for product in all_products|slice:":10" %}
+      <div class="col mb-4">
+        <a href="{% url 'customer:productDetails' product.id %}" style="text-decoration: none;">
           <div class="card custom-card text-dark bg-opacity-10 h-100">
             <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
               <img class="card-img-top rounded-circle p-3" src="{{ product.image.url }}" class="card-img-top" alt=""
@@ -37,7 +105,8 @@
             <div class="card-body">
               <h5 class="card-title"><b>{{ product.name }}</b></h5>
               {% if product.offer_price %}
-              <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{ product.offer_price }}</h5>
+              <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{ product.offer_price }}
+              </h5>
               {% else %}
               <h5 class="card-text text-dark"><strike style="color: brown;">Offer</strike></h5>
               {% endif %}
@@ -45,8 +114,8 @@
 
             </div>
           </div>
-        </div>
-      </a>
+        </a>
+      </div>
       {% endfor %}
     </div>
   </div>
@@ -78,7 +147,8 @@
             <div class="card-body">
               <h5 class="card-title"><b>{{ laptop.name }}</b></h5>
               {% if laptop.offer_price %}
-              <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{ product.offer_price }}</h5>
+              <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{ product.offer_price }}
+              </h5>
               {% else %}
               <h5 class="card-text text-dark"><strike style="color: brown;">Offer</strike></h5>
               {% endif %}
@@ -119,7 +189,8 @@
             <div class="card-body">
               <h5 class="card-title"><b>{{ desktop.name }}</b></h5>
               {% if desktop.offer_price %}
-              <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{ desktop.offer_price }}</h5>
+              <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{ desktop.offer_price }}
+              </h5>
               {% else %}
               <h5 class="card-text text-dark"><strike style="color: brown;">Offer</strike></h5>
               {% endif %}
@@ -159,7 +230,8 @@
             <div class="card-body">
               <h5 class="card-title"><b>{{ mobile.name }}</b></h5>
               {% if mobile.offer_price %}
-              <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{ mobile.offer_price }}</h5>
+              <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{ mobile.offer_price }}
+              </h5>
               {% else %}
               <h5 class="card-text text-dark"><strike style="color: brown;">Offer</strike></h5>
               {% endif %}
@@ -199,7 +271,8 @@
             <div class="card-body">
               <h5 class="card-title"><b>{{ tablet.name }}</b></h5>
               {% if tablet.offer_price %}
-              <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{ tablet.offer_price }}</h5>
+              <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{ tablet.offer_price }}
+              </h5>
               {% else %}
               <h5 class="card-text text-dark"><strike style="color: brown;">Offer</strike></h5>
               {% endif %}
@@ -239,7 +312,8 @@
             <div class="card-body">
               <h5 class="card-title"><b>{{ accessory.name }}</b></h5>
               {% if accessory.offer_price %}
-              <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{ accessory.offer_price }}</h5>
+              <h5 class="card-text text-dark"><strong style="color: brown;">- 5% </strong> ₹ {{ accessory.offer_price }}
+              </h5>
               {% else %}
               <h5 class="card-text text-dark"><strike style="color: brown;">Offer</strike></h5>
               {% endif %}
@@ -252,6 +326,7 @@
     </div>
   </div>
 </section>
+{% endif %}
 
 <script>
   {% if request.GET.message %}

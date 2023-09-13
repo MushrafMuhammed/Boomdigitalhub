@@ -59,7 +59,7 @@ def profilefun(request):
     customerId = request.session["customer_sessionId"]
     customer = Customer.objects.get(id = customerId)
 
-    return render(request, 'customer/profile.html',{'customer':customer})
+    return render(request, 'customer/profile.html',{'user':customer})
 
 def homefun(request):
     search_data = request.GET.get('search_data', '')
@@ -224,8 +224,6 @@ def cartfun(request, product_id):
 
         try:
             product = Product.objects.get(id=product_id)
-
-            product = Product.objects.get(id=product_id)
             product_exist = Cart.objects.filter(
                 product_details=product_id, customer=request.session["customer_sessionId"]
             ).exists()
@@ -247,7 +245,7 @@ def cartfun(request, product_id):
                 return cartItemsfun(request)
             else:
                 msg = "Item already in your cart."
-                return redirect(reverse("customer:home") + f"?message={msg}")
+                return redirect(reverse("customer:home") + f"?message={msg}") 
         except Product.DoesNotExist:
             return render(request, "customer/product_not_found.html")
             
@@ -346,7 +344,7 @@ def address_detailsfun(request):
 @auth_customer
 def checkoutfun(request):
     adrres_id = request.GET.get("aid")
-    print(adrres_id)
+    # print(adrres_id)
     customer_id = request.session["customer_sessionId"]
     # Get cart items
     cart_items = Cart.objects.filter(customer=customer_id)
@@ -386,7 +384,7 @@ def order_productfun(request):
         grand_total += item.grand_total
 
     order_amount = grand_total
-    print(order_amount)
+    # print(order_amount)
     order_currency = "INR"
     order_receipt = "order_rcptid_11"
     notes = {"shipping address": "bommanahalli,bangalore"}
@@ -450,6 +448,7 @@ def callbackfun(request, a_id):
                 quantity=item.quantity,
                 price=item.product_details.price,
             )
+            
             order_item.save()
 
         order_details.save()

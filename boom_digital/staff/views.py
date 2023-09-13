@@ -41,10 +41,11 @@ def dashboardfun(request):
 
 @auth_employee
 def profilefun(request):
-    user = Employee.objects.get(
+    employee = Employee.objects.get(
         id = request.session["employee_sessionID"]
     )
-    return render(request, "employee/profile.html",{'logged_user':user})
+    print(employee.full_name())
+    return render(request, "employee/profile.html",{'user':employee})
 
 @auth_employee
 def newProductfun(request):
@@ -67,25 +68,39 @@ def newProductfun(request):
         else:
             offer_price = Decimal(offer_price)
 
-        newProduct = Product(
-            category_id = category,
-            brand_id = brand,
-            name = name,
-            description = description,
-            price = price,
-            offer_price = offer_price,
-            current_stock = current_stock,
-            image = image,
-        )
-        newProduct.save()
-        msg = "New product added"
+        product_exists = Product.objects.filter(name__iexact=name).exists()
+        if product_exists:
+            # Product with the same name already exists
+            return render(request, "employee/newProduct.html",{"successMessage":"A product with the same name already exists."})
+        else:
+            newProduct = Product(
+                category_id = category,
+                brand_id = brand,
+                name = name,
+                description = description,
+                price = price,
+                offer_price = offer_price,
+                current_stock = current_stock,
+                image = image,
+            )
+            newProduct.save()
+            msg = "New product added"
     return render(request, "employee/newProduct.html",{'categories':categoryList,'brands':brandList,'successMessage':msg})
+
+@auth_employee
+def product_existfun(request):
+    if request.method == 'POST':
+        product_name = request.POST.get('productField')
+        product_exists = Product.objects.filter(name__iexact=product_name).exists()
+        return JsonResponse({'exists': product_exists})
+
+    return JsonResponse({'error': 'Invalid request'})
 
 @auth_employee
 def categoryItemfun(request):
     if request.method == 'POST':
         selectedCategory = request.POST.get('category')
-        # print(selectedCategory)
+        print(selectedCategory)
 
         if selectedCategory:
             selectedBrands = Brand.objects.filter(
@@ -121,10 +136,29 @@ def productDetailsfun(request,product_id):
         categoryList = Category.objects.exclude(
             id = editproduct.category_id
         )
-        brandList = Category.objects.exclude(
+        brandList = Brand.objects.get(
             id = editproduct.brand_id
-        )
-        return render(request, 'employee/productDetails.html',{'editemployee':editproduct, 'categories':categoryList, 'brands':brandList})
+        )      
+        msg = ""
+        if request.method == 'POST':
+            
+
+            
+            editproduct.description = request.POST.get('description')
+            editproduct.price = request.POST.get('price')
+            editproduct.current_stock = request.POST.get('current_stock')
+            if 'image' in request.FILES:
+                editproduct.image = request.FILES.get('image')    
+
+            # Handle empty offer_price
+            offer_price = request.POST.get('offer_price')
+            if not offer_price :
+                editproduct.offer_price = None
+            else:
+                editproduct.offer_price = offer_price
+            editproduct.save()
+            msg = "New product Updated"
+        return render(request, 'employee/productDetails.html',{'editproduct':editproduct, 'categories':categoryList, 'brands':brandList, 'successMessage':msg})
     else:
         return redirect("employee:login")
 

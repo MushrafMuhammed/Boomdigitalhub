@@ -61,6 +61,7 @@
                         <label class="form-label" for="form3Example9">Mobile</label>
                         <input type="text" class="form-control form-control-lg" minlength="0" name="number" value="{{editemployee.phone}}"/>
                     </div>
+                    
 
                     <div class="form-group mb-4">
                         <div class="row">
@@ -101,7 +102,7 @@
 
                     <div class="form-group mb-4">
                         <label class="form-label" for="form3Example9">Joining Date</label>
-                        <input type="date" class="form-control" name="hired_date" value="{{ editemployee.hired_date | date:'Y-m-d' }}" readonly>
+                        <input type="date" class="form-control" name="hired_date" value="{{ editemployee.hired_date | date:'Y-m-d' }}" id="hired_date_input">
                     </div>
                     
                     
@@ -137,8 +138,60 @@
 
 
 <script>
-    {% if successMessage %}
+    $(document).ready(function () {
+        $('#email').change(function () {
+            var email_field = $(this).val();
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRFToken": $('[name=csrfmiddlewaretoken]').val()
+                }
+            })
+            $.ajax({
+                url: "{% url 'admin:email_exist' %}",
+                type: 'POST',
+                data: { email: email_field },
+
+                success: function (response) {
+                    var email_status = $('#email_status'); // Changed to 'email_status'
+                    if (response.exists) {
+                        email_status.html('<i style="color:red;">The email already exist!</i>');
+                    } else {
+                        email_status.html('<i style="color:green;">Available !</i>');
+                    }
+                }
+            });
+        });
+        $('#number').change(function () {
+            var number_field = $(this).val();
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRFToken": $('[name=csrfmiddlewaretoken]').val()
+                }
+            })
+            $.ajax({
+                url: "{% url 'admin:number_exist' %}",
+                type: 'POST',
+                data: { number: number_field },
+
+                success: function (response) {
+                    var number_status = $('#number_status'); // Changed to 'number_status'
+                    if (response.exists) {
+                        number_status.html('<i style="color:red;">The number already exist!</i>');
+                    } else {
+                        number_status.html('<i style="color:green;">Available !</i>');
+                    }
+                }
+            });
+        });
+    });
+    // The maximum date range is limited to today's date
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('hired_date_input').setAttribute('max', today);
+    });
+
     // Display an alert box with the success message
+    {% if successMessage %}
     alert("{{ successMessage }}");
     {% endif %}
 </script>

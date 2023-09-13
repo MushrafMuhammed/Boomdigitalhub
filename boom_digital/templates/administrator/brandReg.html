@@ -97,9 +97,9 @@
                 success:function(response) {
                     var brandStatus = $('#brand_status');
                     if (response.exists) {
-                        brandStatus.html('<span style="color:red">the brand already exist !</span>');
+                        brandStatus.html('<i style="color:red">The brand already exist !</i>');
                     }else{
-                        brandStatus.html('<span style="color:green;">available !</span>');
+                        brandStatus.html('<i style="color:green;">Available !</i>');
                     }
                 }
             })

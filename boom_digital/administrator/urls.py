@@ -24,7 +24,9 @@ urlpatterns = [
     path('delEmployee/<int:employee_id>',views.delEmployeefun, name='delEmployee'),
     path('employeeDetails/<int:employee_id>',views.employeeDetailsfun, name='employeeDetails'),
     path('customers-list',views.customerfun, name='customer'),   
-    path('stock-details',views.stockfun, name='stock'),   
+    path('stock-details',views.stockfun, name='stock'),  
+    path('delProduct/<int:product_id>',views.delProductfun, name='delProduct'), 
+    path('addOffer/<int:product_id>',views.addOfferfun, name='addOffer'), 
     path('logout',views.logoutfun, name='logout'),
     path('notFound',views.notFoundfun, name='notFound'),   
 ]

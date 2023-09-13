@@ -85,9 +85,9 @@
                 success: function(response) {
                     var category_status = $('#category_status'); // Changed to 'category_status'
                     if (response.exists) {
-                        category_status.html('<span style="color:red;">the category already exist!</span>');
+                        category_status.html('<i style="color:red;">The category already exist!</i>');
                     } else {
-                        category_status.html('<span style="color:green;">available !</span>');
+                        category_status.html('<i style="color:green;">Available !</i>');
                     }
                 }
             });

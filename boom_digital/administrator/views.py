@@ -1,3 +1,4 @@
+import random
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
@@ -62,7 +63,7 @@ def newCategoryfun(request):
 def category_existfun(request):
     if request.method == 'POST':
         category_name = request.POST.get('category_name')
-        category_exists = Category.objects.filter(name=category_name).exists()
+        category_exists = Category.objects.filter(name__iexact=category_name).exists()
         return JsonResponse({'exists': category_exists})
 
     return JsonResponse({'error': 'Invalid request'})
@@ -123,7 +124,7 @@ def newBrandfun(request):
 def brand_existfun(request):
     if request.method == 'POST':
         brandName = request.POST.get('brand_name')
-        brand_exists = Brand.objects.filter(name = brandName).exists()
+        brand_exists = Brand.objects.filter(name__iexact=brandName).exists()
         return JsonResponse({'exists': brand_exists})
 
     return JsonResponse({'error': 'Invalid request'})
@@ -185,7 +186,7 @@ def newEmployeefun(request):
         qualification = request.POST.get('qualification')
         profile_img = request.FILES.get('profile_img')
         # Generate a password
-        password = first_name.lower() + '@boom'
+        password = first_name.lower() + '@boom' 
         message = 'Hai Your username is ' + str(email) + 'and temporary password is ' + password
         
         # Create a new user with the generated password
@@ -201,6 +202,7 @@ def newEmployeefun(request):
             qualification =qualification,
             profile_img = profile_img,
         )
+
         # Send email   
         send_mail(
             'Your New Account in Boom Digital Hub',
@@ -217,7 +219,7 @@ def newEmployeefun(request):
 def email_existfun(request):
     if request.method == 'POST':
         emailId = request.POST.get('email')
-        email_exists = Employee.objects.filter(email = emailId).exists()
+        email_exists = Employee.objects.filter(email__iexact = emailId).exists()
         return JsonResponse({'exists': email_exists})
 
     return JsonResponse({'error': 'Invalid request'})
@@ -285,6 +287,29 @@ def stockfun(request):
     # Calculate total current_stock
     total_current_stock = sum(product.current_stock for product in productList)
     return render(request, 'administrator/stockDetails.html',{'products':productList,'count':productCount, 'total_stock':total_current_stock})
+
+def delProductfun(request,product_id):
+    if "admin_sessionID" in request.session:
+        delItem = Product.objects.get(
+            id = product_id,
+        )
+        delItem.delete()
+        return redirect('admin:stock')
+    else:
+        return redirect("admin:login")
+
+def addOfferfun(request,product_id):
+    if "admin_sessionID" in request.session:
+        editproduct = Product.objects.get(
+            id = product_id,
+        )
+
+        if request.method == "POST":
+            editproduct.offer_price = request.POST.get('offer_price')
+        editproduct.save()
+        return render(request, 'administrator/addOffers.html',{'editproduct':editproduct})
+    else:
+        return redirect("admin:login")    
 
 def logoutfun(request):
     del request.session["admin_sessionID"]

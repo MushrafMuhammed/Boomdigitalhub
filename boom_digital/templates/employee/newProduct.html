@@ -58,7 +58,8 @@
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Product</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="nameField" placeholder="Product name" name="name" required/><br>
+                        <input type="text" class="form-control" id="nameField" placeholder="Product name" name="name" required/>
+                        <span id="product_status"></span><br>
                     </div>
                 </div>
 
@@ -78,9 +79,9 @@
                 <div class=" form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Offer Price</label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" id="offer_price" placeholder="optional" name="offer_price"/><br>
+                        <input type="number" class="form-control" id="offer_price" placeholder="₹" name="offer_price" value="{{editproduct.offer_price}}" oninput="validateOfferPrice(this.value)">
+                        <i id="offerPriceError" style="color: red;"></i><br></div>
                     </div>
-                </div>
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Current Stock</label>
                     <div class="col-sm-10">
@@ -94,8 +95,8 @@
                     </div>
                 </div>
                 <div class="">
-                    <div class="col-sm-10" style="width: 100%">
-                        <button type="submit" class="btn btn-dark" style="width: 50%; margin-left: 40%; ">Add
+                    <div class="col-sm-10">
+                        <button type="submit" id="submitButton" class="btn btn-dark" style="width: 50%; margin-left: 40%; ">Add
                             Product</button>
                     </div>
                 </div>
@@ -110,6 +111,9 @@
 <!-- Include jQuery Cookie plugin from CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
+<!-- ajax_cdn   -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+
 <script>
 
     $(document).ready(function(){
@@ -147,8 +151,55 @@
                 brandDropdown.append(option);
             }
         }
+        $('#nameField').change(function(){
+            var productName = $(this).val();
+                $.ajaxSetup({
+                    headers: {
+                        "X-CSRFToken": $('[name=csrfmiddlewaretoken]').val()
+                    }
+                })
+                $.ajax({
+                    url: "{% url 'employee:product_exist' %}",
+                    type: 'POST',
+                    data: { productField: productName },
+    
+                    success: function(response) {
+                        var product_status = $('#product_status'); // 'product_status' field
+                        if (response.exists) {
+                            product_status.html('<i style="color:red;">The product already exist!</i>');
+                        } else {
+                            product_status.html('<i style="color:green;">Available !</i>');
+                        }
+                    }
+                });
+            });
           
     });
+
+    // set the offer_price conditionally based on the value of the price field
+    function validateOfferPrice(offerPrice) {
+        const price = parseFloat(document.getElementById("pricefield").value);
+        const submitButton = document.getElementById("submitButton");
+        const offerPriceError = document.getElementById("offerPriceError");
+
+        if (isNaN(price)) {
+            offerPriceError.innerText = "Please enter a valid price first.";
+            submitButton.disabled = true;
+            return;
+        }
+
+        if (parseFloat(offerPrice) >= price) {
+            offerPriceError.innerText = "Offer price must be less than the price.";
+            submitButton.disabled = true;
+        } else {
+            offerPriceError.innerText = "";
+            submitButton.disabled = false;
+        }
+    }
+
+    
+       
+   
 
     {% if successMessage %}
     alert('{{successMessage}}')

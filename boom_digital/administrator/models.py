@@ -39,6 +39,9 @@ class Employee(models.Model):
     qualification = models.CharField(max_length=100,default='')
     profile_img = models.ImageField(upload_to='employee_images/')
     
+    def full_name(self):
+        return f"{self.first_name}{self.second_name}"
+
     class Meta :
         db_table = 'employee'
 

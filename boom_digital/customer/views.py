@@ -450,7 +450,10 @@ def callbackfun(request, a_id):
             )
             
             order_item.save()
-
+        
+        # Decrement the stock of the product in the cart
+        item.product_details.current_stock -= item.quantity
+        item.product_details.save()
         order_details.save()
         
         

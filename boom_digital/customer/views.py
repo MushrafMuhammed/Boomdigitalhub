@@ -13,7 +13,7 @@ from customer.models import Cart, DeliveryAddress, Order, OrderItem
 from django.db.models import Sum
 from django.db.models import F
 from django.views.decorators.csrf import csrf_exempt
-from wkhtmltopdf.views import PDFTemplateView
+
 
 from staff.models import Product
 

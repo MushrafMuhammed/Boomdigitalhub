@@ -34,4 +34,5 @@ Boom Digital is a fully-featured e-commerce platform developed using Django, a h
 4. Staff members can log in to the admin interface to manage products, orders, and inventory efficiently.
 5. Monitor order status, track deliveries, and provide exceptional customer service to ensure a positive shopping experience.
 
+![Boom Digital Poster](https://github.com/MushrafMuhammed/Boomdigitalhub/assets/70097723/7f479dac-40c8-47bd-815c-3b93d8767ace)
 
